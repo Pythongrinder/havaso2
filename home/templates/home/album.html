@@ -13,10 +13,11 @@
   <div class="col-md-8"><img src="/media/{{ jar.0.jar_image }}" height="425px" width="425px" alt="" class="mr-2 jar-img-album"></div>
 
   <div class="col-md-4 my-auto"><h3 id="jar-title" class="jar-title">{{ jar.0.jar_name }}</h3>
-    <h5>Description</h5>
+    <h6>Decorator: {{ jar.0.decorator }}</h6>
       <p class="description" >{{ jar.0.comment }}</p>
       <input type="submit" id="buyjar" value="Buy" class="btn btn-large btn-outline-secondary btn-subscribe" />
       <input type="submit" id="addwishlist" value="Add to Wishlist" class="btn btn-large btn-outline-secondary btn-subscribe" data-toggle="modal" data-target="#wishlist"/>
+      <input type="submit" id="viewwishlist" value="View Wishlist" class="btn btn-large btn-outline-secondary btn-subscribe" data-toggle="modal" data-target="#wishlist_items"/>
       <input id="jarnumber" hidden value="{{ jar.0.jar_number }}">
   </div>
 </div>
@@ -84,7 +85,7 @@
           <div class="media text-muted pt-3">
           <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <strong class="d-block text-gray-dark">{{ post.title }}</strong>
-            {{ post.content }}
+            {{ post.content|striptags|truncatewords:20 }}
           </p>
         </div>
           {% endfor %}
@@ -149,10 +150,61 @@
 </div>
 
 
+<!-- Modal -->
+<div class="modal fade" id="wishlist_items" tabindex="-1" role="dialog" aria-labelledby="wishlist" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title">My wishlist!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+<div class="modal-body">
 
+    <div class="container mb-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"> </th>
+                            <th scope="col">Product</th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
+                            <td>Product Name Dada</td>
+                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
+                            <td>Product Name Toto</td>
+                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
+                            <td>Product Name Titi</td>
+                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
+                        </tr>
 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
-
+    </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 

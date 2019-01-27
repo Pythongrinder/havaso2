@@ -93,6 +93,20 @@ def about(request):
     print(request.session.get('wishlist'))
     return render(request, 'home/about.html', context)
 
+def page(request):
+
+
+    content = request.GET
+    print(content['page'])
+
+    context = {
+        'AboutText': WebContent.objects.get(position__iexact=content['page'])
+    }
+    print(request.session.get('wishlist'))
+    return render(request, 'home/about.html', context)
+
+
+
 def shop(request):
     check_set_session(request)
     # The shop page has to get data from the database of the selected Jar
