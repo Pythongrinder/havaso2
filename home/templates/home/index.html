@@ -1,0 +1,67 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+<div class="container py-4">
+<div class="col-md-12 remove-all-margin-padding">
+ <div class="row">
+
+        <div class="col-md-7">
+        <img src="http://test.havaso.com/wp-content/uploads/2018/09/photo-slider-1-700x250.jpg" class="img-fluid">
+      </div>
+        <div class="col-md-5">
+    		<div class="thumbnail center well well-sm text-center">
+                <h2>Newsletter</h2>
+                <p>Subscribe to our weekly Newsletter and stay tuned.</p>
+                <div id="alerts"></div>
+
+                <form enctype="multipart/form-data" method="post" action="/newsletter/newsletter/subscribe/" id="subscribe">
+{% csrf_token %}
+<input type="email" class="form-control" name="email_field" required="" id="id_email_field" placeholder="Email">
+<button id="id_submit" name="submit" class="btn btn-large btn-outline-secondary btn-subscribe" value="Subscribe" type="submit">Subscribe</button>
+</form>
+
+            </div>
+        </div>
+
+    </div>
+    </div>
+  </div>
+    <main role="main" class="container">
+      <div class="row">
+        <div class="col-md-8 offset-md-2 blog-main py-5">
+
+          <div class="blog-post">
+            <p>{{ description.text|safe }}</p>
+          </div><!-- /.blog-post -->
+
+
+        </div><!-- /.blog-main -->
+      </div><!-- /.row -->
+<div class="album py-4">
+        <div class="container">
+            <div class="row">
+           {% for post in posts %}
+            <div class="col-md-4">
+              <div class="card mb-4 shadow-sm">
+                <img class="card-img-top" src="/media/{{ post.featured_image }}" width="255px" height="255px" alt="Card image cap">
+                <div class="card-body">
+                <h4 class="card-text">{{ post.title }}</h4>
+                  <div class="card-text flex-column" style="height: 100px;">{{ post.content|safe|truncatewords:10 }}</div>
+
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Read</button>
+                    </div>
+                    <small class="text-muted">Written by {{ post.author }} </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+           {% endfor %}
+          </div>
+        </div>
+    </div>
+
+    </main><!-- /.container -->
+
+{% endblock %}

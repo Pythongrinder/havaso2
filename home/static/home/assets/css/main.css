@@ -1,0 +1,238 @@
+/* stylelint-disable selector-list-comma-newline-after */
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+
+margin-bottom: 150px;
+
+}
+
+
+
+
+.blog-header {
+  line-height: 1;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.blog-header-logo {
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: 2.25rem;
+}
+
+.blog-header-logo:hover {
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+  color: #343434;
+}
+
+.display-4 {
+  font-size: 2.5rem;
+}
+@media (min-width: 992px) {
+  .display-4 {
+    font-size: 3rem;
+  }
+
+.logomargin {
+
+max-height: 76px;
+max-width: 177px;
+margin: 7px 5px 0 0;
+
+}
+
+.whiteline {
+      width: 100%; /* Line width */
+      background-color: white; /* Line color */
+      height: 1px; /* Override in-line if you want specific height. */
+      position: absolute;
+      top: 64px;
+}
+
+
+.shopProduct {
+
+margin-top: 10vh;
+
+}
+
+.firstOverlayLine  {
+  position: absolute;
+  display: block;
+  height: 36px;
+  width: 100%;
+  background: #e5e6e6;
+  top: 64px;
+  z-index:-1;
+  border-top: 1px solid white;
+
+}
+
+.colorline{
+
+margin-top: -5px;
+
+}
+
+  .navbarlocation {
+  position: absolute;
+  left: 4.5%;
+  right: 25%;
+  top: 50px;
+  display: block;
+  z-index:100000;
+  }
+
+
+
+
+}
+
+.nav-scroller {
+  position: relative;
+  z-index: 2;
+  height: 2.75rem;
+  overflow-y: hidden;
+}
+
+.nav-scroller .nav {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  padding-bottom: 1rem;
+  margin-top: -1px;
+  overflow-x: auto;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.nav-scroller .nav-link {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: .875rem;
+}
+
+.card-img-right {
+  height: 100%;
+  border-radius: 0 3px 3px 0;
+}
+
+.flex-auto {
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+}
+
+.h-250 { height: 250px; }
+@media (min-width: 768px) {
+  .h-md-250 { height: 250px; }
+}
+
+/*
+ * Blog name and description
+ */
+.blog-title {
+  margin-bottom: 0;
+  font-size: 2rem;
+  font-weight: 400;
+}
+.blog-description {
+  font-size: 1.1rem;
+  color: #999;
+}
+
+@media (min-width: 40em) {
+  .blog-title {
+    font-size: 3.5rem;
+  }
+}
+
+
+.btn-subscribe {
+
+      margin-top: 15px;
+    
+}
+
+/*
+ * Blog posts
+ */
+.blog-post {
+  text-align: center;
+}
+.blog-post-title {
+  margin-bottom: .25rem;
+  font-size: 2.5rem;
+}
+.blog-post-meta {
+  color: #999;
+}
+
+/*
+ * Footer
+ */
+.blog-footer {
+
+  color: #999;
+  background-color: #e5e6e6;
+  border-top: .05rem solid #e5e5e5;
+
+}
+
+
+.blog-footer p:last-child {
+  margin-bottom: 0;
+}
+
+.remove-all-margin-padding{
+margin:0 ! important;
+padding:0 ! important;
+}
+
+
+
+.previouspage, .nextpage {
+  text-decoration: none;
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: black;
+  color: white;
+}
+
+.previouspage:hover, .nextpage:hover {
+  background-color: #ddd;
+  color: black;
+  text-decoration: none;
+
+}
+
+
+.thankyou {
+
+margin-bottom: 19vh;
+
+}
+
+a { color: #343434; font-weight: bold; text-decoration: none; }
+a:visited { color: #438093; font-weight: bold; text-decoration: none; }
+a:hover { color: #990033; text-decoration: underline; }
+a:focus { color: #990033; }
+a:active { color: #990033; }
+
+
+footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 100px;
+  width: 100%;
+}

@@ -1,0 +1,113 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+
+{% load static %}
+<!-- Product Detail -->
+<section>
+
+    {% if product.jar_name %}
+    <div class="container">
+
+        <div class="row shopProduct">
+
+            <div class="col-md-6">
+
+                <img width="350" height="350" src="/media/{{ product.jar_image }}" alt="IMG-PRODUCT" class="img-fluid">
+
+            </div>
+
+            <div class="col-md-6">
+
+                <!-- multistep form -->
+<form id="msform">
+  <!-- progressbar -->
+  <ul id="progressbar">
+    <li class="active">Account Setup</li>
+    <li>Social Profiles</li>
+    <li>Personal Details</li>
+  </ul>
+
+
+  <!-- fieldsets -->
+  <fieldset>
+    <h2 class="fs-title">Choose your purpose</h2>
+    <h3 class="fs-subtitle">This is step 1</h3>
+    <h4>{{ product.jar_name }}</h4>
+    <span>{{ product.product_details.price }}</span>
+     <p>{{ product.comment }}</p>
+
+    <div  class="">Purpose</div>
+  <select class="custom-select my-select" id="purpose" name="purpose">
+        <option value="Choose an option">Choose an option</option>
+        <option value="General">General</option>
+        <option value="Personal">Personal</option>
+        <option value="Guided">Guided</option>
+    </select>
+    <input value="Buy" name="next" class="btn btn-large btn-outline-secondary btn-subscribe next" />
+  </fieldset>
+
+
+
+  <fieldset>
+    <h2 class="fs-title">Choose</h2>
+    <h3 class="fs-subtitle"></h3>
+
+      <div class="">Purpose</div>
+    <select class="custom-select my-select" id="shopselector" name="purpose">
+    </select>
+    <div id="shopbar"></div>
+    <div id="addq"></div>
+    <input type="button" name="previous" class="previous btn btn-large btn-outline-secondary btn-subscribe" value="Previous" />
+    <input type="button" name="next" class="next btn btn-large btn-outline-secondary btn-subscribe" value="Next" />
+  </fieldset>
+
+
+</form>
+
+
+        </div>
+    </div>
+    </div>
+    </div>
+    {% else %}
+
+
+<div class="container" style="margin-top: 8%;">
+    <div class="col-md-6 offset-md-3">
+
+        <div class="text-center">
+        <h1>You have not selected a Jar</h1><p>Please eneter a Jar number or return to Jar Album page to select a Jar</p>
+        </div>
+
+        <form role="form" id="JarSearchForm">
+            <div class="form-group">
+            <div class="input-group">
+            <input class="form-control" list="jarlist" id='jarsearch' type="text" name="jarnumber" placeholder="Search..." required/>
+                <datalist id="jarlist">
+                </datalist>
+            </div>
+                <br>
+                <div class="input-group">
+                <input type="submit" class="btn btn-primary btn-lg btn-block" value="Select">
+            </div>
+<br>
+                <div id="alert">
+
+                </div>
+
+
+            </div>
+</form>
+
+    </div>
+</div>
+
+
+    <div class="shopProduct"></div>
+
+</section>
+
+    {% endif %}
+
+{% endblock %}
