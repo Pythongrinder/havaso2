@@ -13,12 +13,11 @@
   <div class="col-md-8"><img src="/media/{{ jar.0.jar_image }}" height="425px" width="425px" alt="" class="mr-2 jar-img-album"></div>
 
   <div class="col-md-4 my-auto"><h3 id="jar-title" class="jar-title">{{ jar.0.jar_name }}</h3>
-    <h6>Decorator: {{ jar.0.decorator }}</h6>
+    <h6 id="decorator">Decorator: {{ jar.0.decorator }}</h6>
       <p class="description" >{{ jar.0.comment }}</p>
-      <input type="submit" id="buyjar" value="Buy" class="btn btn-large btn-outline-secondary btn-subscribe" />
+      <button id="jarnumber" value="{{ jar.0.jar_number }}" class="btn btn-large btn-outline-secondary btn-subscribe buyjar">Buy</button>
       <input type="submit" id="addwishlist" value="Add to Wishlist" class="btn btn-large btn-outline-secondary btn-subscribe" data-toggle="modal" data-target="#wishlist"/>
       <input type="submit" id="viewwishlist" value="View Wishlist" class="btn btn-large btn-outline-secondary btn-subscribe" data-toggle="modal" data-target="#wishlist_items"/>
-      <input id="jarnumber" hidden value="{{ jar.0.jar_number }}">
   </div>
 </div>
      </div>
@@ -30,7 +29,7 @@
     {% for image in jar %}
                 <li class="getid">
                 <img src="/media/{{ image.jar_image }}"  id="{{ image.jar_name }}" alt="{{ image.comment }}" class="rounded img-fluid">
-                <input hidden value="{{ image.jar_number }}">
+                <input hidden value="{{ image.jar_number }}"> <input class="decorator" hidden value="{{ image.decorator }}">
                 </li>
     {% endfor %}
 
@@ -156,7 +155,7 @@
     <div class="modal-content">
       <div class="modal-header">
           <h5 class="modal-title">My wishlist!</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -174,22 +173,8 @@
                             <th> </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Dada</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Toto</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Titi</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
-                        </tr>
+                    <tbody id="wishlisttable">
+
 
                     </tbody>
                 </table>

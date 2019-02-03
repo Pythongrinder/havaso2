@@ -1,27 +1,68 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from album.models import Jar
 import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from django.core import serializers
+import json
+import itertools
 
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
 
+
 @csrf_exempt
 def create(request):
-    if request.method == "POST":
-        status = request.POST.get("jar",)
-        request.session['wishlist']['products'] = status
+    if request.method == "POST" and request.POST.get("jar"):
+        print("PAY ATTENTION")
+        print(request.POST.get("jar"))
+        status = request.POST.get("jar")
+        if status not in request.session['wishlist']['products']:
+            request.session['wishlist']['products'].append(status)
+            request.session.modified = True
         print(request.session.get('wishlist'))
-        request.session.modified = True
+    else:
+        if request.POST.get("buyjar"):
+            jar_number = request.POST.get("buyjar", )
+            request.session['wishlist']['buy'] = jar_number
+            request.session.modified = True
+        print(request.session.get('wishlist'))
 
 
     return JsonResponse("Type in a Jar name", safe=False)
 
 
-def sendwishlist(request):
+def viewwishlist(request):
+    WishlistedItemsDetailList = []
+    output = {}
+    if request.method == "GET":
+        try:
+            WishlistedItems = request.session.get('wishlist')['products']
 
+            for item in WishlistedItems:
+                WishlistedItemsDetails = Jar.objects.select_related('decorator').filter(jar_number__iexact=item)
+                WishlistedItemsDetailList.append(WishlistedItemsDetails)
+            i = 0
+            for item in WishlistedItemsDetailList:
+                # STRING
+                data = serializers.serialize('json', item)
+                # List and inside dictionary
+                d = json.loads(data)
+                # Append only dictionary to a list with dictionary
+                for dec in item:
+                    decorator = dec.decorator
+                    d[0]['fields']['decorator'] = str(decorator)
+                output[i] = d[0]
+                i += 1
+            d = json.dumps([output])
+
+        except:
+            d = None
+    return HttpResponse(d, content_type='application/json')
+
+
+def sendwishlist(request):
     sender_email = "my@gmail.com"
     receiver_email = "your@gmail.com"
     password = input("Type your password and press enter:")

@@ -14,16 +14,34 @@ $(".next").click(function(){
 
 
     var purpose = $('#purpose option:selected').val();
+    var purpose2 = $('#shopselector option:selected').val();
+
+    console.log(purpose2)
+
+
+    if (purpose2) {
+
+    window.location.href = '/payment/'
+
+    }
+
+
+
+
+
+
 
     if (purpose === 'Choose an option') {
 // DOES NOT DO ANYTHING
  }
 
-
-
     else if (purpose === 'General') {
     console.log(purpose)
     animating = true;
+
+    $('#shoppage2').prepend('<div class="boxtitle"><h2 class="fs-title">Step 2 - General Jar</h2>' +
+   '<p>You have chosen a General Jar.</p> <p> Price: € 27,50</p> <p>Find your purpose</p></div>')
+
 
     var url = '/shop/getcheckout/';
     var data = {purpose: purpose}
@@ -46,6 +64,7 @@ $(".next").click(function(){
                     jQuery.each(val, function(i, val) {
                         next_fs.show();
                         console.log(val)
+
                  $('#shopselector').append("<option class='opval' value='" + val['ingredient'] + "'>" + val['ingredient'] + "</option>");
 
 
@@ -53,20 +72,17 @@ $(".next").click(function(){
                                                 });
 
 
-                                                                 $('#shopbar').append("<input type='text' class='form-control' class='qt' placeholder='Quantity' name='quantity'> ");
-                 $('#addq').append("<input type='submit' class='btn' value='Add More Ingredients' id='AddIngridient' name='quantity'>")
+                  // $('#shopbar').append("<input type='text' class='form-control' class='qt' placeholder='Quantity' name='quantity'> ");
+                 //$('#addq').append("<input type='submit' class='btn' value='Add More Ingredients' id='AddIngridient' name='quantity'>")
 
                                                      // ADD ANOTHER INPUT
-
-$('#AddIngridient').click(function(event) {
-
-event.preventDefault();
-
-
-$( "#shopselector" ).clone().appendTo( "#shopbar" );
-$('#shopbar').append("<input type='text' class='form-control qt' placeholder='Quantity' name='quantity'>");
-
-});
+//
+//$('#AddIngridient').click(function(event) {
+//event.preventDefault();
+//$( "#shopselector" ).clone().appendTo( "#shopbar" );
+//$('#shopbar').append("<input type='text' class='form-control qt' placeholder='Quantity' name='quantity'>");
+//
+//});
 
 
                                 }
@@ -196,10 +212,11 @@ $(".previous").click(function(){
 	previous_fs = $(this).parent().prev();
 
     $("#shopbar").empty();
+    $(".boxtitle").remove();
 
 	//de-activate current step on progressbar
 	$("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
-
+    console.log(previous_fs)
 	//show the previous fieldset
 	previous_fs.show();
 	//hide the current fieldset with style
@@ -295,6 +312,33 @@ $("#JarSearchForm").submit(function(e) {
 
 
 // this is the id of the form
+$("#viewwishlist").click(function(){
+    $("#wishlisttable").empty()
+    console.log("ALERT!")
+    var url = '/wishlist/view/';
+    $.ajax({
+         type: "GET",
+         url: url,
+         dataType: "json",
+         data: 'view=view', // serializes the form's elements.
+         success: function(data){
+
+                for (x in data[0]) {
+                wishlistItems = '<tr> <td><img width="50px" src="/media/'+ data[0][x]['fields']['jar_image'] +'">' +
+               '</td><td>'+ data[0][x]['fields']['jar_name'] +' <p>Decorated by '+ data[0][x]['fields']['decorator'] +' </p></td> ' +
+               ' <td class="text-right"><button value="'+ data[0][x]['fields']['jar_number'] +'" class="btn btn-sm btn-success buyjar">Buy</button> </td>'+
+               '</tr>';
+                $("#wishlisttable").append(wishlistItems)
+                }
+
+                    }
+         });
+
+});
+
+
+
+// this is the id of the form
 $("#subscribe").submit(function(e) {
 e.preventDefault(); // avoid to execute the actual submit of the form.
 alert("HELLO");
@@ -320,3 +364,10 @@ alert("HELLO");
 
 
 });
+
+// When loading the wishlist view from add to the wishlist.
+
+$('#wishlist').on('hidden.bs.modal', function () {
+  // Load up a new modal...
+  $('#viewwishlist').click()
+})

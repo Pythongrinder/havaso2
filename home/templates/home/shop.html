@@ -31,13 +31,10 @@
 
   <!-- fieldsets -->
   <fieldset>
-    <h2 class="fs-title">Choose your purpose</h2>
-    <h3 class="fs-subtitle">This is step 1</h3>
-    <h4>{{ product.jar_name }}</h4>
-    <span>{{ product.product_details.price }}</span>
-     <p>{{ product.comment }}</p>
-
-    <div  class="">Purpose</div>
+    <h2 class="fs-title">Fantastic you've found your jar.</h2>
+      <h4>You have selected Jar NR: {{ product.jar_name }}</h4>
+    <h3 class="fs-subtitle">The next step in creating your Medicine jar is to define its purpose</h3>
+      <h3 class="fs-subtitle">What kind of purpose do you want?</h3>
   <select class="custom-select my-select" id="purpose" name="purpose">
         <option value="Choose an option">Choose an option</option>
         <option value="General">General</option>
@@ -49,17 +46,13 @@
 
 
 
-  <fieldset>
-    <h2 class="fs-title">Choose</h2>
-    <h3 class="fs-subtitle"></h3>
-
-      <div class="">Purpose</div>
+  <fieldset id="shoppage2">
     <select class="custom-select my-select" id="shopselector" name="purpose">
     </select>
     <div id="shopbar"></div>
     <div id="addq"></div>
-    <input type="button" name="previous" class="previous btn btn-large btn-outline-secondary btn-subscribe" value="Previous" />
     <input type="button" name="next" class="next btn btn-large btn-outline-secondary btn-subscribe" value="Next" />
+    <input type="button" name="previous" class="previous btn btn-large btn-outline-secondary btn-subscribe" value="Previous" />
   </fieldset>
 
 
@@ -77,7 +70,7 @@
     <div class="col-md-6 offset-md-3">
 
         <div class="text-center">
-        <h1>You have not selected a Jar</h1><p>Please eneter a Jar number or return to Jar Album page to select a Jar</p>
+        <h1>{% if itemswishlisted %} You have several Jars in your wishlist, please select one. {% else %} You have not selected a Jar {% endif %}</h1><p>Please eneter a Jar number or return to Jar Album page to select a Jar</p>
         </div>
 
         <form role="form" id="JarSearchForm">
@@ -134,22 +127,8 @@
                             <th> </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Dada</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Toto</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Titi</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
-                        </tr>
+                    <tbody id="wishlisttable">
+
 
                     </tbody>
                 </table>

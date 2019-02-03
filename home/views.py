@@ -6,8 +6,9 @@ from home.models import WebContent
 # from newsletter.forms import NewsletterForm
 from django.contrib import messages
 from .forms import ContactForm
-from django.core.mail import send_mail
-from django.core.mail import EmailMessage
+# from django.core.mail import send_mail
+# from django.core.mail import EmailMessage
+from django.contrib.sites.models import Site
 
 description = "Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros."
 
@@ -27,7 +28,8 @@ def check_set_session(request):
         print("It is triggered!")
         request.session['wishlist'] = {
             'ip': ip,
-            'products': ''
+            'products': [],
+            'buy': ""
         }
         current_session_state = request.session.get('wishlist')
         return current_session_state
@@ -56,6 +58,8 @@ def index(request):
         'description' : WebContent.objects.get(position__iexact="HomePageDescriptionText"),
          'posts' : Posts.objects.all().order_by('-date_created')[:3],
         }
+
+    print(Site.objects.get_current())
 
 
     print(check_set_session(request))
@@ -91,6 +95,7 @@ def about(request):
         'AboutText': WebContent.objects.get(position__iexact="AboutPageText")
     }
     print(request.session.get('wishlist'))
+    request.session.clear()
     return render(request, 'home/about.html', context)
 
 def page(request):
@@ -110,14 +115,25 @@ def page(request):
 def shop(request):
     check_set_session(request)
     # The shop page has to get data from the database of the selected Jar
-    jar_number = request.session.get('wishlist')['products']
-    if jar_number is not "":
-        product = Jar.objects.select_related('product_details').get(jar_number__iexact=jar_number)
+    wishlist_jar_number = request.session.get('wishlist')['products']
+    buy_jar_number = request.session.get('wishlist')['buy']
+
+    print(request.session.get('wishlist'))
+    if len(wishlist_jar_number) == 1:
+        product = Jar.objects.select_related('product_details').get(jar_number__iexact=wishlist_jar_number[0])
+    elif buy_jar_number:
+        product = Jar.objects.select_related('product_details').get(jar_number__iexact=buy_jar_number)
     else:
         product = None
 
+    if len(wishlist_jar_number) > 1:
+        SeveralItemsWishlisted = True
+    else:
+        SeveralItemsWishlisted = False
+
     context = {
         'product': product,
+        'itemswishlisted': SeveralItemsWishlisted
     }
 
 

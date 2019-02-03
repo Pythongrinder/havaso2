@@ -84,7 +84,9 @@ $('#goToNextSlide').on('click', function () {
         var alt = $(this).children("img").attr("alt");
         var src = $(this).children("img").attr("src");
         var id = $(this).children("input").attr("value");
+        var decorator = $(this).children(".decorator").attr("value");
         $('.jar-title').text(event.target.id)
+        $('#decorator').text("Decorator: "+decorator)
         $('.description').text(alt)
         $('.jar-img-album').attr("src", src);
         $('#jarnumber').attr("value", id);
@@ -117,12 +119,11 @@ $("#addwishlist").click(function() {
 
 
 // this is the id of the form
-$("#buyjar").click(function() {
+$(document).on('click', '.buyjar', function() {
 
     var url = '/wishlist/add/';
-    var jarnumber = $('#jarnumber').attr("value");
-    var data = {jar: jarnumber}
-
+    var jarnumber = $(this).attr("value");
+    var data = {buyjar: jarnumber}
     $.ajax({
            type: "POST",
            url: url,

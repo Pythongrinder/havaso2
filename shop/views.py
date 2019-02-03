@@ -9,27 +9,37 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def Selectjar(request):
-    status = 0
-    if request.GET.get('jar'):
-        status = request.GET.get('jar')
-        if status:
-            result = Jar.objects.filter(jar_name__contains=status)
-            queryset = result.values()
-            return JsonResponse({"models_to_return": list(queryset)})
+    jar_number = request.GET.get('jar')
+
+    if jar_number:
+        result = Jar.objects.filter(jar_name__contains=jar_number)
+        queryset = result.values()
+        return JsonResponse({"models_to_return": list(queryset)})
 
     elif request.GET.get('jarnumber'):
-        status = request.GET.get('jarnumber')
-        if status:
-            result = Jar.objects.filter(jar_number__iexact=status)
+        jar_number = request.GET.get('jarnumber')
+
+        if jar_number:
+            result = Jar.objects.filter(jar_number__iexact=jar_number)
+            print(result.count())
+
             if result.count() is 0:
-                result = Jar.objects.filter(jar_name__iexact=status)
+                result = Jar.objects.filter(jar_name__iexact=jar_number)
+                print(result.count())
 
-            request.session['wishlist']['products'] = list(result.values('jar_number'))[0]['jar_number']
-            print(request.session.get('wishlist'))
-            request.session.modified = True
+            if result.count() > 0:
+                if list(result.values('jar_number'))[0]['jar_number'] not in request.session['wishlist']['products']:
+                    request.session['wishlist']['products'].append(list(result.values('jar_number'))[0]['jar_number'])
+                    request.session.modified = True
+                    print(request.session.get('wishlist'))
 
-            queryset = result.values()
-            return JsonResponse({"models_to_return": list(queryset)})
+                else:
+                    request.session['wishlist']['buy'] = list(result.values('jar_number'))[0]['jar_number']
+                    request.session.modified = True
+                    print(request.session.get('wishlist'))
+
+                queryset = result.values()
+                return JsonResponse({"models_to_return": list(queryset)})
 
     return JsonResponse("Type in a Jar name", safe=False)
 
@@ -53,6 +63,5 @@ def Checkout(request):
 
             queryset = result.values()
             return JsonResponse({"models_to_return": list(queryset)})
-
 
     return JsonResponse("Type in a Jar name", safe=False)
