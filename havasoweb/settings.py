@@ -24,7 +24,7 @@ SECRET_KEY = 'ot8cdb6oq-$!d*wgdcj_*)vdu31is-eb=89i!w0%o7**m^^p$9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1']
 
 # Application definition
 
@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'newsletter.apps.NewsletterConfig',
     'ckeditor',
+    'photologue',
+     'sortedm2m',
 ]
 
 MIDDLEWARE = [
@@ -56,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.sites.middleware.CurrentSiteMiddleware'
 ]
 
 ROOT_URLCONF = 'havasoweb.urls'
@@ -77,7 +80,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'havasoweb.wsgi.application'
-SITE_ID = 0
+SITE_ID = 8
+
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases

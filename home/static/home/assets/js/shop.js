@@ -6,34 +6,20 @@ var left, opacity, scale; //fieldset properties which we will animate
 var animating; //flag to prevent quick multi-click glitches
 
 $(".next").click(function(){
-
-
-
-	current_fs = $(this).parent();
-	next_fs = $(this).parent().next();
-
-
+	var current_fs = $(this).parent();
+	var next_fs = $(this).parent().next();
     var purpose = $('#purpose option:selected').val();
-    var purpose2 = $('#shopselector option:selected').val();
-
-    console.log(purpose2)
 
 
-    if (purpose2) {
-
-    window.location.href = '/payment/'
-
+   var purpose2 = $('#shopselector option:selected').val();
+       if (purpose2) {
+    window.location.href = '/shop/payment/'
     }
-
-
-
-
-
 
 
     if (purpose === 'Choose an option') {
 // DOES NOT DO ANYTHING
- }
+    }
 
     else if (purpose === 'General') {
     console.log(purpose)
@@ -41,6 +27,8 @@ $(".next").click(function(){
 
     $('#shoppage2').prepend('<div class="boxtitle"><h2 class="fs-title">Step 2 - General Jar</h2>' +
    '<p>You have chosen a General Jar.</p> <p> Price: € 27,50</p> <p>Find your purpose</p></div>')
+
+
 
 
     var url = '/shop/getcheckout/';
@@ -63,34 +51,15 @@ $(".next").click(function(){
                   jQuery.each(data, function(i, val) {
                     jQuery.each(val, function(i, val) {
                         next_fs.show();
-                        console.log(val)
-
                  $('#shopselector').append("<option class='opval' value='" + val['ingredient'] + "'>" + val['ingredient'] + "</option>");
-
-
                                                      });
                                                 });
 
-
-                  // $('#shopbar').append("<input type='text' class='form-control' class='qt' placeholder='Quantity' name='quantity'> ");
-                 //$('#addq').append("<input type='submit' class='btn' value='Add More Ingredients' id='AddIngridient' name='quantity'>")
-
-                                                     // ADD ANOTHER INPUT
-//
-//$('#AddIngridient').click(function(event) {
-//event.preventDefault();
-//$( "#shopselector" ).clone().appendTo( "#shopbar" );
-//$('#shopbar').append("<input type='text' class='form-control qt' placeholder='Quantity' name='quantity'>");
-//
-//});
 
 
                                 }
                }
              });
-
-
-
 
 
 
@@ -128,11 +97,6 @@ $(".next").click(function(){
                }
              });
     next_fs.show();
-
-
-
-
-
 
 
 /// NOT WORKING YET
@@ -207,7 +171,6 @@ $(".next").click(function(){
 $(".previous").click(function(){
 	if(animating) return false;
 	animating = true;
-
 	current_fs = $(this).parent();
 	previous_fs = $(this).parent().prev();
 

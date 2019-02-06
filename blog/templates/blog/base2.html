@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    {% load static %}
+    <link rel="icon" href="{% static 'home/assets/img/favicon.ico' %}">
+
+    {% if title %}
+    <title>Medicine Jars - {{ title }}</title>
+    {% else %}
+    <title>Medicine Jars</title>
+    {% endif %}
+    <!-- Bootstrap core CSS -->
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.6/css/lightslider.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'home/assets/css/main.css' %}" rel="stylesheet">
+    <link href="{% static 'home/assets/css/shop.css' %}" rel="stylesheet">
+
+    <style>
+
+@font-face {
+    font-family: GraublauWeb;
+    src: url("{% static 'home/assets/font/TektonPro-Regular.otf' %}") format("opentype");
+}
+
+
+    </style>
+
+</head>
+
+
+<header>
+
+
+    <div class="float-right logomargin"><img src="{% static 'home/assets/img/Logo.png' %}" alt="placeholder 960"
+                                             class="img-fluid"/></div>
+    <div class="whiteline"></div>
+    <nav style="font-family: GraublauWeb;" class="navbar navbar-expand-lg navbar-light navbarlocation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08"
+                aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+<div class="row">
+        <div class="collapse navbar-collapse" id="navbarsExample08">
+            <ul class="navbar-nav align-items-start">
+                {% with url_name=request.resolver_match.url_name %}
+                <li class="nav-item {% if url_name == 'havaso-home' %}active{% endif %}">
+                    <a class="nav-link" href="/">Company<span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item {% if url_name == 'album' %}active{% endif %}">
+                    <a class="nav-link" href="/album">CNG</a>
+                </li>
+
+                <li class="nav-item  {% if url_name == 'shop' %}active{% endif %}">
+                    <a class="nav-link" href="/shop">Blog</a>
+                </li>
+                {% endwith %}
+            </ul>
+        </div>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarsExample08">
+              <ul class="navbar-nav justify-content-end ">
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">Support</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">Contact Us</a>
+                </li>
+            </ul>
+    </div>
+</div>
+    </nav>
+    <div class="col-md-12 remove-all-margin-padding">
+        <div id="preview-image-wrapper">
+            <span class="firstOverlayLine"></span>
+            <img src="{% static 'home/assets/img/ColouredLine.png' %}" alt="placeholder 960"
+                 class="img-fluid w-100 colorline"/>
+        </div>
+    </div>
+
+
+</header>
+{% block content %}{% endblock %}
+<footer class="blog-footer">
+    <div class="col-md-12 remove-all-margin-padding">
+        <img src="{% static 'home/assets/img/footer-p2&3-2048.png' %}" alt="placeholder 960" class="img-fluid w-100"/>
+
+        <div style="font-family: GraublauWeb;" class="container">
+            <div class="row">
+                <div class="col-md-6"><a href="#">Site Map</a> &nbsp; &nbsp; <a href="#">Legal Terms</a> &nbsp; &nbsp;
+                    <a href="#">Contact Us</a></div>
+                <div class="col-md-6 text-right">All rights reserved Havaso ltd</div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</footer>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/holderjs@2.9.6/holder.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.6/js/lightslider.js"></script>
+<script src="{% static 'home/assets/js/album.js' %}"></script>
+
+
+<script src="{% static 'home/assets/js/shop.js' %}"></script>
+</body>
+</html>

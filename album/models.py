@@ -9,15 +9,15 @@ class Decorator(models.Model):
     def __str__(self):
         return self.decorator
 
+#
+# class JarIngredient(models.Model):
+#     ingredient = models.CharField(max_length=200)
+#
+#     def __str__(self):
+#         return self.ingredient
 
-class JarIngredient(models.Model):
-    ingredient = models.CharField(max_length=200)
 
-    def __str__(self):
-        return self.ingredient
-
-
-class JarGoalKeyword(models.Model):
+class JarPurpose(models.Model):
     keyword = models.CharField(max_length=200)
 
     def __str__(self):

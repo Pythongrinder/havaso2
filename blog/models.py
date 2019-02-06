@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 # Create your models here.
 from ckeditor.fields import RichTextField
+from autoslug import AutoSlugField
 
 class Category (models.Model):
     name = models.CharField(max_length=100)
@@ -11,6 +12,9 @@ class Category (models.Model):
 
     def __str__(self):
         return self.name
+
+
+
 
 
 class Posts (models.Model):
@@ -35,6 +39,7 @@ class Posts (models.Model):
     date_posted = models.DateTimeField(null=True, blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     editor = models.ForeignKey(User, blank=True, null=True, on_delete=models.PROTECT, related_name='user_editor')
+    slug = AutoSlugField(populate_from='title')
 
     def __str__(self):
         title = self.title + " Category: "

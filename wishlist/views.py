@@ -14,21 +14,18 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def create(request):
+    print(request.session['session'])
     if request.method == "POST" and request.POST.get("jar"):
-        print("PAY ATTENTION")
         print(request.POST.get("jar"))
         status = request.POST.get("jar")
-        if status not in request.session['wishlist']['products']:
-            request.session['wishlist']['products'].append(status)
+        if status not in request.session['session']['products']:
+            request.session['session']['products'].append(status)
             request.session.modified = True
-        print(request.session.get('wishlist'))
     else:
         if request.POST.get("buyjar"):
             jar_number = request.POST.get("buyjar", )
-            request.session['wishlist']['buy'] = jar_number
+            request.session['session']['buy'] = jar_number
             request.session.modified = True
-        print(request.session.get('wishlist'))
-
 
     return JsonResponse("Type in a Jar name", safe=False)
 
@@ -38,7 +35,7 @@ def viewwishlist(request):
     output = {}
     if request.method == "GET":
         try:
-            WishlistedItems = request.session.get('wishlist')['products']
+            WishlistedItems = request.session.get('session')['products']
 
             for item in WishlistedItems:
                 WishlistedItemsDetails = Jar.objects.select_related('decorator').filter(jar_number__iexact=item)

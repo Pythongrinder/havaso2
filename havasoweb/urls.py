@@ -27,6 +27,7 @@ urlpatterns = [
     path(r'tinymce/', include('tinymce.urls')),
     path(r'wishlist/', include('wishlist.urls')),
     path(r'shop/', include('shop.urls')),
+    path(r'blog/', include('blog.urls')),
     path(r'newsletter/', include('newsletter.urls')),
     path(r'photologue/', include('photologue.urls', namespace='photologue')),
 

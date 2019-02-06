@@ -22,16 +22,17 @@ def get_client_ip(request):
 
 
 def check_set_session(request):
-    current_session_state = request.session.get('wishlist')
+    current_session_state = request.session.get('session')
     if current_session_state is None:
         ip = get_client_ip(request)
         print("It is triggered!")
-        request.session['wishlist'] = {
+        request.session['session'] = {
             'ip': ip,
             'products': [],
-            'buy': ""
+            'buy': "",
+            'purpose': ""
         }
-        current_session_state = request.session.get('wishlist')
+        current_session_state = request.session.get('session')
         return current_session_state
     else:
         return current_session_state
@@ -40,19 +41,6 @@ def check_set_session(request):
 
 def index(request):
 
-
-    # if request.method == "POST":
-    #     form = NewsletterForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-    #         form = NewsletterForm()
-    #         messages.success(request, 'Thank you for signing up!')
-    #     else:
-    #         messages.error(request, 'Email not valid or already exists!')
-    #         form = NewsletterForm()
-    # else:
-    #     form = NewsletterForm()
-
     context =  {
         'title' : 'Homepage',
         'description' : WebContent.objects.get(position__iexact="HomePageDescriptionText"),
@@ -60,27 +48,11 @@ def index(request):
         }
 
     print(Site.objects.get_current())
-
-
     print(check_set_session(request))
-    print(request.session.get('wishlist'))
 
     return render(request, 'home/index.html', context)
 
 def album(request):
-    print(request.session.get('wishlist'))
-    # if request.method == "POST":
-    #     form = NewsletterForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-    #         form = NewsletterForm()
-    #         messages.success(request, 'Thank you for signing up!')
-    #     else:
-    #         messages.error(request, 'Email not valid or already exists!')
-    #         form = NewsletterForm()
-    #
-    # else:
-    #     form = NewsletterForm()
 
     context =  {
         'title' : 'Jar Album',
@@ -94,7 +66,7 @@ def about(request):
     context = {
         'AboutText': WebContent.objects.get(position__iexact="AboutPageText")
     }
-    print(request.session.get('wishlist'))
+    print(request.session.get('session'))
     request.session.clear()
     return render(request, 'home/about.html', context)
 
@@ -111,33 +83,6 @@ def page(request):
     return render(request, 'home/about.html', context)
 
 
-
-def shop(request):
-    check_set_session(request)
-    # The shop page has to get data from the database of the selected Jar
-    wishlist_jar_number = request.session.get('wishlist')['products']
-    buy_jar_number = request.session.get('wishlist')['buy']
-
-    print(request.session.get('wishlist'))
-    if len(wishlist_jar_number) == 1:
-        product = Jar.objects.select_related('product_details').get(jar_number__iexact=wishlist_jar_number[0])
-    elif buy_jar_number:
-        product = Jar.objects.select_related('product_details').get(jar_number__iexact=buy_jar_number)
-    else:
-        product = None
-
-    if len(wishlist_jar_number) > 1:
-        SeveralItemsWishlisted = True
-    else:
-        SeveralItemsWishlisted = False
-
-    context = {
-        'product': product,
-        'itemswishlisted': SeveralItemsWishlisted
-    }
-
-
-    return render(request, 'home/shop.html', context)
 
 def contact(request):
 
@@ -162,8 +107,4 @@ def contact(request):
 
     return render(request, 'home/contact.html', context)
 
-def payment(request):
-    return render(request, 'home/payment.html')
 
-def thankyou(request):
-    return render(request, 'home/thankyou.html')

@@ -1,4 +1,4 @@
-{% extends "home/base.html" %}
+{% extends "blog/base2.html" %}
 
 {% block content %}
 <div class="container py-4">
@@ -8,76 +8,57 @@
 
 <div class="row">
   <div class="col-md-8">
-      <div class="col-md-12">
-         <div class="row">
-  <div class="col-md-8"><img src="/media/{{ jar.0.jar_image }}" height="425px" width="425px" alt="" class="mr-2 jar-img-album"></div>
 
-  <div class="col-md-4 my-auto"><h3 id="jar-title" class="jar-title">{{ jar.0.jar_name }}</h3>
-    <h6 id="decorator">Decorator: {{ jar.0.decorator }}</h6>
-      <p class="description" >{{ jar.0.comment }}</p>
-      <button id="jarnumber" value="{{ jar.0.jar_number }}" class="btn btn-large btn-outline-secondary btn-subscribe buyjar">Buy</button>
-      <input type="submit" id="addwishlist" value="Add to Wishlist" class="btn btn-large btn-outline-secondary btn-subscribe" data-toggle="modal" data-target="#wishlist"/>
-      <input type="submit" id="viewwishlist" value="View Wishlist" class="btn btn-large btn-outline-secondary btn-subscribe" data-toggle="modal" data-target="#wishlist_items"/>
-  </div>
-</div>
-     </div>
+{% if single  %}
 
 
+          <div class="col-xs-12 py-4">
+        <h1>{{ post.title }}</h1>
+        <p class="text-muted" align="right">{{ post.author }} {{ post.date_posted }}</p>
+        <img src='/media/{{ post.featured_image }}' class="p-3" height="250px" align='left' />
 
-    <div class="col-xs-12 py-4">
-<ul id="light-slider">
-    {% for image in jar %}
-                <li class="getid">
-                <img src="/media/{{ image.jar_image }}"  id="{{ image.jar_name }}" alt="{{ image.comment }}" class="rounded img-fluid">
-                <input hidden value="{{ image.jar_number }}"> <input class="decorator" hidden value="{{ image.decorator }}">
-                </li>
-    {% endfor %}
-
-
-
-</ul>
-  <button type="button" id="goToPrevSlide" class="btn btn-outline-secondary btn-subscribe">Prev</button>
-   <button type="button" id="goToNextSlide" class="btn btn-outline-secondary btn-subscribe">Next</button>
-
+        {{ post.content|safe }}
 
       </div>
   </div>
 
 
+{% else %}
 
+{% for post in posts %}
+            <div class="col-md-5">
+              <div class="card mb-4 shadow-sm blogpost">
+                  <a href="/blog?post={{ post.slug }}"><img class="card-img-top" src="/media/{{ post.featured_image }}" width="50px" alt="Card image cap"></a>
+                <div class="card-body">
+                    <a style="text-decoration: none;" href="/blog?post={{ post.slug }}"> <h4 class="card-text">{{ post.title }}</h4></a>
+                    <a style="text-decoration: none;" href="/blog?post={{ post.slug }}"> <div class="card-text flex-column" style="height: 100px;">{{ post.content|safe|truncatewords:10 }}</div></a>
+
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <a href="/blog?post={{ post.slug }}"><button type="button" class="btn btn-sm btn-outline-secondary">Read</button></a>
+                    </div>
+                    <small class="text-muted">Written by {{ post.author }} </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+           {% endfor %}
+</div>
+ {% endif %}
 
 
      <div class="col-md-4">
-    		<div class="thumbnail center well well-sm text-center">
-                <h2>Newsletter</h2>
-                <p>Subscribe to our weekly Newsletter and stay tuned.</p>
 
-                  {% if messages %}
-                        {% for message in messages %}
-                        <div class="alert alert-light" role="alert">
-                            {{ message }}
-                        </div>
-                        {% endfor %}
-                        {% endif %}
-
-
-                <form enctype="multipart/form-data" method="post" action="/newsletter/newsletter/subscribe/">
-{% csrf_token %}
-<input type="email" class="form-control" name="email_field" required="" placeholder="Email" id="id_email_field">
-<button id="id_submit" name="submit" class="btn btn-large btn-outline-secondary btn-subscribe" value="Subscribe" type="submit">Subscribe</button>
-</form>
-            </div>
 
 
              <div class="d-flex align-items-center  text-white-50 bg-purple rounded box-shadow">
         <img class="mr-3" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-outline.svg" alt="" width="48" height="48">
         <div class="lh-100">
-          <h6 class="mb-0 text-white lh-100">Havaso</h6>
 
         </div>
       </div>
 
-{% include "blog/updates.html" with posts=posts %}
+      {% include "blog/updates.html" with posts=posts %}
 
 
 

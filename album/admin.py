@@ -1,8 +1,7 @@
 from django.contrib import admin
-from .models import Jar, Decorator, JarGoalKeyword, JarIngredient
-# Register your models here.
+from .models import Jar, Decorator, JarPurpose
 
 admin.site.register(Jar)
 admin.site.register(Decorator)
-admin.site.register(JarGoalKeyword)
-admin.site.register(JarIngredient)
+admin.site.register(JarPurpose)
+# admin.site.register(JarIngredient)
