@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from blog.models import Posts
+from blog.models import Post
 from album.models import Jar
 from home.models import WebContent
 # from newsletter.forms import NewsletterForm
@@ -44,7 +44,7 @@ def index(request):
     context =  {
         'title' : 'Homepage',
         'description' : WebContent.objects.get(position__iexact="HomePageDescriptionText"),
-         'posts' : Posts.objects.all().order_by('-date_created')[:3],
+         'posts' : Post.objects.all().order_by('-date_created')[:3],
         }
 
     print(Site.objects.get_current())

@@ -8,7 +8,7 @@ from email.mime.multipart import MIMEMultipart
 from django.core import serializers
 import json
 from django.core.mail import send_mail
-from blog.models import Posts
+from blog.models import Post
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
@@ -103,6 +103,6 @@ def wishlist(request):
     context = {
         'decorator': decorators,
         'jars': jars.wishlistedjars.values(),
-        'posts': Posts.objects.all().order_by('-date_created')[:3],
+        'posts': Post.objects.all().order_by('-date_created')[:3],
     }
     return render(request, 'wishlist/wishlist.html', context)

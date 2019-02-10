@@ -14,10 +14,7 @@ class Category (models.Model):
         return self.name
 
 
-
-
-
-class Posts (models.Model):
+class Post (models.Model):
     title = models.CharField(max_length=100)
     featured_image = models.FileField(upload_to='blog', default='')
     content = RichTextField()
