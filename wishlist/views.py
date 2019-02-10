@@ -1,19 +1,26 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
-from album.models import Jar
+from album.models import Jar, Decorator
+from .models import EmailedWishList
 import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from django.core import serializers
 import json
-import itertools
-
+from django.core.mail import send_mail
+from blog.models import Posts
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.template.defaulttags import register
+from home.views import check_set_session
+from django.contrib.sites.shortcuts import get_current_site
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
 
 
 @csrf_exempt
-def create(request):
+def add(request):
     print(request.session['session'])
     if request.method == "POST" and request.POST.get("jar"):
         print(request.POST.get("jar"))
@@ -59,47 +66,43 @@ def viewwishlist(request):
     return HttpResponse(d, content_type='application/json')
 
 
-def sendwishlist(request):
-    sender_email = "my@gmail.com"
-    receiver_email = "your@gmail.com"
-    password = input("Type your password and press enter:")
+def sendwishlistemail(request):
+    email = request.POST.get("mail")
+    print(email)
+    JarsObjects = []
+    WishlistedItems = request.session.get('session')['products']
+    for jar in WishlistedItems:
+        JarsObjects.append(Jar.objects.get(jar_number=jar))
 
-    message = MIMEMultipart("alternative")
-    message["Subject"] = "multipart test"
-    message["From"] = sender_email
-    message["To"] = receiver_email
+    print(JarsObjects)
+    a = EmailedWishList(email=email)
+    a.save()
+    a.wishlistedjars.set(JarsObjects)
 
-    # Create the plain-text and HTML version of your message
-    text = """\
-    Hi,
-    How are you?
-    Real Python has many great tutorials:
-    www.realpython.com"""
-    html = """\
-    <html>
-      <body>
-        <p>Hi,<br>
-           How are you?<br>
-           <a href="http://www.realpython.com">Real Python</a> 
-           has many great tutorials.
-        </p>
-      </body>
-    </html>
-    """
+    subject, from_email = 'Subject', 'support@havaso.com',
+    link = str(get_current_site(request)) +'/wishlist/wishlist?=' + str(a.url_ref)
+    html_content = render_to_string('wishlist/mail.html', {'link': link})  # render with dynamic value
+    text_content = strip_tags(html_content)  # Strip the html tag. So people can see the pure text at least.
 
-    # Turn these into plain/html MIMEText objects
-    part1 = MIMEText(text, "plain")
-    part2 = MIMEText(html, "html")
+    # create the email, and attach the HTML version as well.
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [email])
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
+    return HttpResponse("Done!")
 
-    # Add HTML/plain-text parts to MIMEMultipart message
-    # The email client will try to render the last part first
-    message.attach(part1)
-    message.attach(part2)
 
-    # Create secure connection with server and send email
-    context = ssl.create_default_context()
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
-        server.login(sender_email, password)
-        server.sendmail(
-            sender_email, receiver_email, message.as_string()
-        )
+def wishlist(request):
+    @register.filter
+    def get_item(dictionary, key):
+        return dictionary.get(pk=key)
+
+    check_set_session(request)
+    wishlist_slug = request.GET.get("wishlist")
+    jars = EmailedWishList.objects.get(url_ref=wishlist_slug)
+    decorators = Decorator.objects.filter(id__in=jars.wishlistedjars.values_list('decorator_id'))  # query
+    context = {
+        'decorator': decorators,
+        'jars': jars.wishlistedjars.values(),
+        'posts': Posts.objects.all().order_by('-date_created')[:3],
+    }
+    return render(request, 'wishlist/wishlist.html', context)

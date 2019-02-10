@@ -1,0 +1,87 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+<div class="container py-4">
+<div class="row">
+  <div class="col-md-8">
+      <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"> </th>
+                            <th scope="col">Product</th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody id="wishlisttable">
+                        {% for jar in jars %}
+                    <tr>
+                        <td><img width="50px" src="/media/{{ jar.jar_image }}"></td>
+                        <td> {{ jar.jar_name }} <p>Decorated by {{ decorator|get_item:jar.decorator_id}} </p></td>
+
+                        <td class="text-right"><button value="{{ jar.jar_number }}" class="btn btn-sm btn-success buyjar">Buy</button></td>
+                    </tr>
+                    {% endfor %}
+
+
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+  </div>
+
+
+
+
+
+     <div class="col-md-4">
+    		<div class="thumbnail center well well-sm text-center">
+                <h2>Newsletter</h2>
+                <p>Subscribe to our weekly Newsletter and stay tuned.</p>
+
+                  {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-light" role="alert">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+
+
+                <form enctype="multipart/form-data" method="post" action="/newsletter/newsletter/subscribe/">
+{% csrf_token %}
+<input type="email" class="form-control" name="email_field" required="" placeholder="Email" id="id_email_field">
+<button id="id_submit" name="submit" class="btn btn-large btn-outline-secondary btn-subscribe" value="Subscribe" type="submit">Subscribe</button>
+</form>
+            </div>
+
+
+             <div class="d-flex align-items-center  text-white-50 bg-purple rounded box-shadow">
+        <img class="mr-3" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-outline.svg" alt="" width="48" height="48">
+        <div class="lh-100">
+          <h6 class="mb-0 text-white lh-100">Havaso</h6>
+
+        </div>
+      </div>
+
+{% include "blog/updates.html" with posts=posts %}
+
+
+
+        </div>
+</div>
+
+
+
+    </div>
+
+
+
+
+{% endblock %}

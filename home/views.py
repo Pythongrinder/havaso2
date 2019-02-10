@@ -52,15 +52,6 @@ def index(request):
 
     return render(request, 'home/index.html', context)
 
-def album(request):
-
-    context =  {
-        'title' : 'Jar Album',
-        'posts': Posts.objects.all().order_by('-date_created')[:3],
-        'jar': Jar.objects.all(),
-        }
-
-    return render(request, 'home/album.html', context)
 
 def about(request):
     context = {

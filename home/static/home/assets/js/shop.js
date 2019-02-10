@@ -1,21 +1,20 @@
 
+$("#tocheckout").click(function(){
+    var purpose2 = $('#shopselector option:selected').val();
+    if (purpose2) {
+        window.location.href = '/shop/payment/'
+}
+});
+
 
 //jQuery time
 var current_fs, next_fs, previous_fs; //fieldsets
 var left, opacity, scale; //fieldset properties which we will animate
 var animating; //flag to prevent quick multi-click glitches
-
 $(".next").click(function(){
 	var current_fs = $(this).parent();
 	var next_fs = $(this).parent().next();
     var purpose = $('#purpose option:selected').val();
-
-
-   var purpose2 = $('#shopselector option:selected').val();
-       if (purpose2) {
-    window.location.href = '/shop/payment/'
-    }
-
 
     if (purpose === 'Choose an option') {
 // DOES NOT DO ANYTHING
@@ -28,12 +27,8 @@ $(".next").click(function(){
     $('#shoppage2').prepend('<div class="boxtitle"><h2 class="fs-title">Step 2 - General Jar</h2>' +
    '<p>You have chosen a General Jar.</p> <p> Price: € 27,50</p> <p>Find your purpose</p></div>')
 
-
-
-
     var url = '/shop/getcheckout/';
     var data = {purpose: purpose}
-
        $.ajax({
                type: "GET",
                url: url,
@@ -248,8 +243,6 @@ if (typeof data !== 'string'){
 
 // this is the id of the form
 $("#JarSearchForm").submit(function(e) {
-
-
     var form = $(this);
     var url = '/shop/select/';
     $.ajax({
@@ -259,7 +252,6 @@ $("#JarSearchForm").submit(function(e) {
            success: function(data)
            {
                if (data['models_to_return'].length > 0){
-
               window.location.href = "/shop/"
                } else {
  $('#alert').append('<div class="alert alert-danger" role="alert"> The Jar you selected in not available. Select your Jar in <a href="/album" class="alert-link">Jar Albums</a></div>')
@@ -273,11 +265,9 @@ $("#JarSearchForm").submit(function(e) {
 });
 
 
-
 // this is the id of the form
 $("#viewwishlist").click(function(){
     $("#wishlisttable").empty()
-    console.log("ALERT!")
     var url = '/wishlist/view/';
     $.ajax({
          type: "GET",
@@ -285,7 +275,6 @@ $("#viewwishlist").click(function(){
          dataType: "json",
          data: 'view=view', // serializes the form's elements.
          success: function(data){
-
                 for (x in data[0]) {
                 wishlistItems = '<tr> <td><img width="50px" src="/media/'+ data[0][x]['fields']['jar_image'] +'">' +
                '</td><td>'+ data[0][x]['fields']['jar_name'] +' <p>Decorated by '+ data[0][x]['fields']['decorator'] +' </p></td> ' +
@@ -293,13 +282,9 @@ $("#viewwishlist").click(function(){
                '</tr>';
                 $("#wishlisttable").append(wishlistItems)
                 }
-
-                    }
+                                    }
          });
-
 });
-
-
 
 // this is the id of the form
 $("#subscribe").submit(function(e) {
@@ -334,3 +319,47 @@ $('#wishlist').on('hidden.bs.modal', function () {
   // Load up a new modal...
   $('#viewwishlist').click()
 })
+
+
+
+// this is the id of the form
+$(".sendwishlistemail").submit(function(e) {
+    var form = $(this);
+    var url = '/wishlist/emailwishlist/';
+    $.ajax({
+
+           type: "POST",
+           url: url,
+           data: form.serialize(), // serializes the form's elements.
+           success: function(data)
+           {
+            alert(data)
+
+           }
+         });
+
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+});
+
+
+// this is the id of the form
+$("#pay").submit(function(e) {
+    e.preventDefault();
+    alert("stop!")
+    var form = $(this);
+    var url = '/shop/tocheckout/';
+    $.ajax({
+
+           type: "POST",
+           url: url,
+           data: form.serialize(), // serializes the form's elements.
+           success: function(data)
+           {
+           console.log(data)
+           window.location.href = data
+           }
+         });
+
+
+});
+

@@ -4,6 +4,9 @@ from . import views
 
 
 urlpatterns = [
-path('add/', views.create, name='addwishlist'),
-path('view/', views.viewwishlist, name='viewwishlist')
+path('', views.wishlist, name='wishlist'),
+path('add/', views.add, name='addwishlist'),
+path('view/', views.viewwishlist, name='viewwishlist'),
+path('emailwishlist/', views.sendwishlistemail, name='sendemailwishlist')
+
 ]

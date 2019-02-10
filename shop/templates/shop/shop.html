@@ -20,131 +20,136 @@
             <div class="col-md-6">
 
                 <!-- multistep form -->
-<form id="msform">
-  <!-- progressbar -->
-  <ul id="progressbar">
-    <li class="active">Account Setup</li>
-    <li>Social Profiles</li>
-    <li>Personal Details</li>
-  </ul>
+                <form id="msform">
+                    <!-- progressbar -->
+                    <ul id="progressbar">
+                        <li class="active">Account Setup</li>
+                        <li>Social Profiles</li>
+                        <li>Personal Details</li>
+                    </ul>
 
 
-  <!-- fieldsets -->
-  <fieldset>
-    <h2 class="fs-title">Fantastic you've found your jar.</h2>
-      <h4>You have selected Jar NR: {{ product.jar_name }}</h4>
-    <h3 class="fs-subtitle">The next step in creating your Medicine jar is to define its purpose</h3>
-      <h3 class="fs-subtitle">What kind of purpose do you want?</h3>
-  <select class="custom-select my-select" id="purpose" name="purpose">
-        <option value="Choose an option">Choose an option</option>
-        <option value="General">General</option>
-        <option value="Personal">Personal</option>
-        <option value="Guided">Guided</option>
-    </select>
-    <input value="Buy" name="next" class="btn btn-large btn-outline-secondary btn-subscribe next" />
-  </fieldset>
-
-
-
-  <fieldset id="shoppage2">
-    <select class="custom-select my-select" id="shopselector" name="purpose">
-    </select>
-    <div id="shopbar"></div>
-    <div id="addq"></div>
-    <input type="button" name="next" class="next btn btn-large btn-outline-secondary btn-subscribe" value="Next" />
-    <input type="button" name="previous" class="previous btn btn-large btn-outline-secondary btn-subscribe" value="Previous" />
-  </fieldset>
-
-
-</form>
-
-
+                    <!-- fieldsets -->
+                    <fieldset>
+                        <h2 class="fs-title">Fantastic you've found your jar.</h2>
+                        <h4>You have selected Jar NR: {{ product.jar_name }}</h4>
+                        <h3 class="fs-subtitle">The next step in creating your Medicine jar is to define its
+                            purpose</h3>
+                        <h3 class="fs-subtitle">What kind of purpose do you want?</h3>
+                        <select class="custom-select my-select" id="purpose" name="purpose">
+                            <option value="Choose an option">Choose an option</option>
+                            <option value="General">General</option>
+                            <option value="Personal">Personal</option>
+                            <option value="Guided">Guided</option>
+                        </select>
+                        <input value="Buy" name="next" class="btn btn-large btn-outline-secondary btn-subscribe next"/>
+                    </fieldset>
+                    <fieldset id="shoppage2">
+                        <select class="custom-select my-select" id="shopselector" name="purpose">
+                        </select>
+                        <div id="shopbar"></div>
+                        <div id="addq"></div>
+                        <input type="button" name="next" id="tocheckout" class="next btn btn-large btn-outline-secondary btn-subscribe"
+                               value="Next"/>
+                        <input type="button" name="previous"
+                               class="previous btn btn-large btn-outline-secondary btn-subscribe" value="Previous"/>
+                    </fieldset>
+                </form>
+            </div>
         </div>
-    </div>
     </div>
     </div>
     {% else %}
-
-
-<div class="container" style="margin-top: 8%;">
-    <div class="col-md-6 offset-md-3">
-
-        <div class="text-center">
-        <h1>{% if itemswishlisted %} You have several Jars in your wishlist, please select one. {% else %} You have not selected a Jar {% endif %}</h1><p>Please eneter a Jar number or return to Jar Album page to select a Jar</p>
-        </div>
-
-        <form role="form" id="JarSearchForm">
-            <div class="form-group">
-            <div class="input-group">
-            <input class="form-control" list="jarlist" id='jarsearch' type="text" name="jarnumber" placeholder="Search..." required/>
-                <datalist id="jarlist">
-                </datalist>
+    <div class="container" style="margin-top: 8%;">
+        <div class="col-md-6 offset-md-3">
+            <div class="text-center">
+                <h1>{% if itemswishlisted %} You have several Jars in your wishlist, please select one. {% else %} You
+                    have not selected a Jar {% endif %}</h1>
+                <p>Please eneter a Jar number or return to Jar Album page to select a Jar</p>
             </div>
-                <br>
-                <div class="input-group">
-                <input type="submit" class="btn btn-primary btn-lg btn-block" value="Select">
-                <input type="submit" id="viewwishlist" value="View Wishlist" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#wishlist_items"/>
-            </div>
-<br>
-                <div id="alert">
-
+            <form role="form" id="JarSearchForm">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input class="form-control" list="jarlist" id='jarsearch' type="text" name="jarnumber"
+                               placeholder="Search..." required/>
+                        <datalist id="jarlist">
+                        </datalist>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Select">
+                        <input type="submit" id="viewwishlist" value="View Wishlist"
+                               class="btn btn-primary btn-lg btn-block" data-toggle="modal"
+                               data-target="#wishlist_items"/>
+                    </div>
+                    <br>
+                    <div id="alert">
+                    </div>
                 </div>
-
-
-            </div>
-</form>
-
+            </form>
+        </div>
     </div>
-</div>
-
-
     <div class="shopProduct"></div>
-
 </section>
 
 
 <!-- Modal -->
 <div class="modal fade" id="wishlist_items" tabindex="-1" role="dialog" aria-labelledby="wishlist" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-          <h5 class="modal-title">My wishlist!</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-<div class="modal-body">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">My wishlist!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
 
-    <div class="container mb-4">
-    <div class="row">
-        <div class="col-12">
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col"> </th>
-                            <th scope="col">Product</th>
-                            <th> </th>
-                        </tr>
-                    </thead>
-                    <tbody id="wishlisttable">
+                <div class="container mb-4">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Product</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="wishlisttable">
 
 
-                    </tbody>
-                </table>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <form class="form-inline sendwishlistemail" enctype="multipart/form-data" method="post"
+                      action="/wishlist/emailwishlist/">
+                    {% csrf_token %}
+                    <div class="form-group m-2">
+                        <label for="staticEmail2" class="sr-only">Email</label>
+                        <input type="text" readonly class="form-control-plaintext" id="staticEmail2"
+                               value="Email my wishlist.">
+                    </div>
+                    <div class="form-group mx-sm-3 m-2">
+                        <label for="inputPassword2" class="sr-only">Email</label>
+                        <input type="email" name="mail" class="form-control" id="inputPassword2" placeholder="Email">
+                    </div>
+                    <button type="submit" class="btn btn-primary m-2">Send</button>
+                    <button type="button" class="btn btn-secondary ml-1" data-dismiss="modal">Close</button>
+                </form>
+
             </div>
         </div>
     </div>
 </div>
 
-    </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-    {% endif %}
+{% endif %}
 
 {% endblock %}
