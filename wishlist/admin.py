@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import EmailedWishList
+from .models import SentWishlist
 
 # Register your models here.
-admin.site.register(EmailedWishList)
+admin.site.register(SentWishlist)

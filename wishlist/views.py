@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from album.models import Jar, Decorator
-from .models import EmailedWishList
+from .models import SentWishlist
 import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -75,7 +75,7 @@ def sendwishlistemail(request):
         JarsObjects.append(Jar.objects.get(jar_number=jar))
 
     print(JarsObjects)
-    a = EmailedWishList(email=email)
+    a = SentWishlist(email=email)
     a.save()
     a.wishlistedjars.set(JarsObjects)
 
@@ -98,7 +98,7 @@ def wishlist(request):
 
     check_set_session(request)
     wishlist_slug = request.GET.get("wishlist")
-    jars = EmailedWishList.objects.get(url_ref=wishlist_slug)
+    jars = SentWishlist.objects.get(url_ref=wishlist_slug)
     decorators = Decorator.objects.filter(id__in=jars.wishlistedjars.values_list('decorator_id'))  # query
     context = {
         'decorator': decorators,
