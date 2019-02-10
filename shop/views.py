@@ -15,6 +15,7 @@ import requests
 import json
 import re
 import os.path
+from django.contrib.sites.shortcuts import get_current_site
 
 
 def shop(request):
@@ -114,16 +115,6 @@ def tocheckout(request):
     zip = request.POST.get('zip')
     paymentmethod = request.POST.get('paymentMethod')
 
-    print(jar)
-    print(firstname)
-    print(lastname)
-    print(email)
-    print(address)
-    print(address2)
-    print(country)
-    print(state)
-    print(zip)
-    print(paymentmethod)
     checkout = StoreCheckoutData(first_name=firstname, last_name=lastname, email=email, address1=address,
                                  address2=address2,
                                  country=country, state=state, zip=zip, paymentMethod=paymentmethod,
@@ -220,7 +211,7 @@ def tocheckout(request):
         print("We will create an invoice using the merchant facade")
 
         invoice = client.create_invoice({"price": float(2.00), "currency": "EUR", "token": client.tokens['merchant'],
-                                         "redirectURL": "http://0.0.0.0:8989/shop/thankyou/",
+                                         "redirectURL": str(get_current_site(request))+"/shop/thankyou/",
                                          "posData": '{ "ref" : '+ str(orderId) +' }'})
         checkout.paymentInvoice = invoice['id']
         checkout.save()
