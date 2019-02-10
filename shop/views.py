@@ -211,7 +211,7 @@ def tocheckout(request):
         print("We will create an invoice using the merchant facade")
 
         invoice = client.create_invoice({"price": float(2.00), "currency": "EUR", "token": client.tokens['merchant'],
-                                         "redirectURL": str(get_current_site(request))+"/shop/thankyou/",
+                                         "redirectURL": "http://"+str(get_current_site(request))+"/shop/thankyou/",
                                          "posData": '{ "ref" : '+ str(orderId) +' }'})
         checkout.paymentInvoice = invoice['id']
         checkout.save()

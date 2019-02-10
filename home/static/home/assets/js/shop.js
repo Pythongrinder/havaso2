@@ -345,7 +345,6 @@ $(".sendwishlistemail").submit(function(e) {
 // this is the id of the form
 $("#pay").submit(function(e) {
     e.preventDefault();
-    alert("stop!")
     var form = $(this);
     var url = '/shop/tocheckout/';
     $.ajax({
@@ -355,7 +354,6 @@ $("#pay").submit(function(e) {
            data: form.serialize(), // serializes the form's elements.
            success: function(data)
            {
-           console.log(data)
            window.location.href = data
            }
          });
