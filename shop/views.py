@@ -103,7 +103,8 @@ def Checkout(request):
 
 def tocheckout(request):
     jar = request.POST.get('jarnumber')
-    purpose = request.POST.get('purpose')
+    purpose = request.POST.get('jarpurpose')
+    keywords = request.POST.get('jarkeyword')
     firstname = request.POST.get('firstname')
     lastname = request.POST.get('lastname')
     email = request.POST.get('email')
@@ -117,7 +118,7 @@ def tocheckout(request):
     checkout = StoreCheckoutData(first_name=firstname, last_name=lastname, email=email, address1=address,
                                  address2=address2,
                                  country=country, state=state, zip=zip, paymentMethod=paymentmethod,
-                                 order_details=jar + " " + purpose + " ")
+                                 order_details=jar + " " + purpose + " " + keywords)
     checkout.save()
     orderId = checkout.pk
 
