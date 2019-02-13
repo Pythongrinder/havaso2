@@ -80,7 +80,7 @@ def sendwishlistemail(request):
     a.wishlistedjars.set(JarsObjects)
 
     subject, from_email = 'Subject', 'support@havaso.com',
-    link = str(get_current_site(request)) +'/wishlist/wishlist?=' + str(a.url_ref)
+    link = str(get_current_site(request)) +'/wishlist/?wishlist=' + str(a.url_ref)
     html_content = render_to_string('wishlist/mail.html', {'link': link})  # render with dynamic value
     text_content = strip_tags(html_content)  # Strip the html tag. So people can see the pure text at least.
 
