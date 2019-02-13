@@ -1,10 +1,33 @@
 
-$("#tocheckout").click(function(){
-    var purpose2 = $('#shopselector option:selected').val();
-    if (purpose2) {
-        window.location.href = '/shop/payment/'
-}
-});
+
+    $(document).on("click", "#tocheckout", function(){
+
+      var singleData=$("textarea:eq(1)").val();
+
+      var url = '/shop/getcheckout/';
+
+      if (singleData){
+      var data = {puprosetext: singleData}
+      } else {
+      singleData = $('#shopselector option:selected').val();
+      var data = {puprosetext: singleData}
+
+      }
+
+
+
+       $.ajax({
+               type: "GET",
+               url: url,
+               data: data,
+               success: function(data)
+               {
+
+               window.location.href = '/shop/payment/'
+
+               }});
+
+    });
 
 
 //jQuery time
@@ -20,12 +43,15 @@ $(".next").click(function(){
 // DOES NOT DO ANYTHING
     }
 
-    else if (purpose === 'General') {
+    else if (purpose === 'Personal') {
     console.log(purpose)
     animating = true;
-
+    next_fs.show();
+    $("#shopselector").hide();
     $('#shoppage2').prepend('<div class="boxtitle"><h2 class="fs-title">Step 2 - General Jar</h2>' +
-   '<p>You have chosen a General Jar.</p> <p> Price: € 27,50</p> <p>Find your purpose</p></div>')
+   '<p>You have chosen a General Jar.</p> <p> Price: € 42,50</p> <p>Describe the purpose for your jar.</p>'+
+   '<textarea id="textInput" rows="4" cols="50"> </textarea>'+
+   '<small class="text-muted">Please give a short description of your goal or objective. May be keywords.</small></div>')
 
     var url = '/shop/getcheckout/';
     var data = {purpose: purpose}
@@ -35,35 +61,15 @@ $(".next").click(function(){
                data: data,
                success: function(data)
                {
-
-               $("#shopselector option").each(function() {
-                            $(this).remove();
-                        });
-                        $('#addq').find(':first-child').remove();
-
-
-    if (typeof data !== 'string'){
-                  jQuery.each(data, function(i, val) {
-                    jQuery.each(val, function(i, val) {
-                        next_fs.show();
-                 $('#shopselector').append("<option class='opval' value='" + val['ingredient'] + "'>" + val['ingredient'] + "</option>");
-                                                     });
-                                                });
-
-
-
-                                }
-               }
-             });
-
-
+               }});
 
 /// WORKING
 
-    } else if (purpose === 'Personal') {
-    console.log(purpose)
+    } else if (purpose === 'General') {
+       $('#shoppage2').prepend('<div class="boxtitle"><h2 class="fs-title">Step 2 - Personal Jar</h2>' +
+   '<p>You have chosen a Personal Jar.</p> <p> Price: €27.50 </p> <p>Find your purpose</p></div>')
     animating = true;
-        var url = '/shop/getcheckout/';
+    var url = '/shop/getcheckout/';
     var data = {purpose: purpose}
 
        $.ajax({
@@ -72,8 +78,6 @@ $(".next").click(function(){
                data: data,
                success: function(data)
                {
-
-
       $("#shopselector option").each(function() {
                                 $(this).remove();
                             });
@@ -83,9 +87,7 @@ $(".next").click(function(){
                   jQuery.each(data, function(i, val) {
                     jQuery.each(val, function(i, val) {
                         next_fs.show();
-                        console.log(val)
-                  $('#shopselector').prepend("<option class='opval' value='" + val['keyword'] + "'>" + val['keyword'] + "</option>");
-
+                        $('#shopselector').prepend("<option class='opval' value='" + val['keyword'] + "'>" + val['keyword'] + "</option>");
                                                      });
                                                 });
                                 }
@@ -96,31 +98,26 @@ $(".next").click(function(){
 
 /// NOT WORKING YET
     } else {
-    console.log(purpose)
-        var url = '/shop/getcheckout/';
-    var data = {purpose: purpose}
+    animating = true;
+    $("#shopselector").hide();
+    next_fs.show();
+    $('#shoppage2').prepend('<div class="boxtitle"><h2 class="fs-title">Step 2 - Guided Jar</h2>' +
+   '<p>You have chosen a Guided Jar.</p> <p> Price: € 75,00</p> '+
+   '<p>After payment you will be directed to an appointment picker. Make an appointment to finish your order.</p>'+
+    '<textarea class="describe" rows="4" cols="50"> </textarea>'+
+   '<small class="text-muted">Please provide us with your ideas, thoughts or doubts to have a starting point for our call. May be keywords</small></div>')
 
+      var url = '/shop/getcheckout/';
+      var data = {purpose: purpose}
        $.ajax({
                type: "GET",
                url: url,
                data: data,
                success: function(data)
                {
+               }});
 
-    if (typeof data !== 'string'){
-                  jQuery.each(data, function(i, val) {
-                    jQuery.each(val, function(i, val) {
-                        next_fs.show();
-                        console.log(val)
-                        $("#shopselector option").remove();
-                 // $('#jarlist').append("<option class='opval' value='" + val['jar_number'] + "'>" + val['jar_name'] + "</option>");
-                                                     });
-                                                });
-                                }
-               }
-             });
-    animating = true;
-    next_fs.show();
+
 
     }
 
@@ -159,16 +156,12 @@ $(".next").click(function(){
 });
 
 
-
-
-
-
 $(".previous").click(function(){
 	if(animating) return false;
 	animating = true;
 	current_fs = $(this).parent();
 	previous_fs = $(this).parent().prev();
-
+    $("#shopselector").show();
     $("#shopbar").empty();
     $(".boxtitle").remove();
 
@@ -217,8 +210,6 @@ $('#jarsearch').on('input', function() {
     var url = '/shop/select/';
     var data = {jar: search}
 
-
-
     $.ajax({
            type: "GET",
            url: url,
@@ -239,7 +230,6 @@ if (typeof data !== 'string'){
          });
 
 });
-
 
 // this is the id of the form
 $("#JarSearchForm").submit(function(e) {
@@ -324,8 +314,12 @@ $('#wishlist').on('hidden.bs.modal', function () {
 
 // this is the id of the form
 $(".sendwishlistemail").submit(function(e) {
+
     var form = $(this);
     var url = '/wishlist/emailwishlist/';
+
+    $(".wishlist-alert").removeAttr("hidden").append('<p class="text-center">Wishlist email sending!</p>');
+    $(".wishlist-alert").fadeIn( 400 );
     $.ajax({
 
            type: "POST",
@@ -333,7 +327,9 @@ $(".sendwishlistemail").submit(function(e) {
            data: form.serialize(), // serializes the form's elements.
            success: function(data)
            {
-            alert(data)
+           $(".wishlist-alert").empty();
+           $(".wishlist-alert").append('<p class="text-center alert-text">Wishlist email sent!</p>');
+           $(".wishlist-alert").delay( 1500 ).fadeOut( 800 )
 
            }
          });

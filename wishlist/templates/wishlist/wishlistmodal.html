@@ -1,0 +1,56 @@
+<!-- Modal -->
+<div class="modal fade" id="wishlist_items" tabindex="-1" role="dialog" aria-labelledby="wishlist" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">My wishlist!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="container mb-4">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Product</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="wishlisttable">
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <form class="form-inline sendwishlistemail" enctype="multipart/form-data" method="post"
+                      action="/wishlist/emailwishlist/">
+                    {% csrf_token %}
+                    <div class="form-group m-2">
+                        <label for="staticEmail2" class="sr-only">Email</label>
+                        <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="Email my wishlist.">
+                    </div>
+                    <div class="form-group mx-sm-3 m-2">
+                        <label for="inputemail" class="sr-only">Email</label>
+                        <input type="email" name="mail" class="form-control" id="inputemail" placeholder="Email">
+                    </div>
+                    <button type="submit" class="btn btn-primary m-2">Send</button>
+                    <button type="button" class="btn btn-secondary ml-1" data-dismiss="modal">Close</button>
+                </form>
+            </div>
+             <div class="alert alert-primary wishlist-alert" hidden role="alert">
+             </div>
+        </div>
+    </div>
+</div>

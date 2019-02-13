@@ -65,8 +65,9 @@ def Selectjar(request):
                 print(result.count())
 
             if result.count() > 0:
-                if list(result.values('jar_number'))[0]['jar_number'] not in request.session['session']['products']:
-                    request.session['session']['products'].append(list(result.values('jar_number'))[0]['jar_number'])
+                if str(list(result.values('jar_number'))[0]['jar_number']) not in request.session['session']['products']:
+                    request.session['session']['products'].append(str(list(result.values('jar_number'))[0]['jar_number']))
+                    request.session.get('session')['buy'] = str(list(result.values('jar_number'))[0]['jar_number'])
                     request.session.modified = True
 
                 else:
@@ -76,35 +77,33 @@ def Selectjar(request):
                 queryset = result.values()
                 return JsonResponse({"models_to_return": list(queryset)})
 
-    return JsonResponse("Type in a Jar name", safe=False)
+    return JsonResponse({"models_to_return": ""})
 
 
 def Checkout(request):
     result = ""
     if request.GET.get('purpose'):
         purpose = request.GET.get('purpose')
+        request.session.get('session')['purpose'] = purpose
+        request.session.modified = True
         if purpose == "General":
             result = JarPurpose.objects.all()
-            print(result)
-        elif purpose == "Personal":
-            result = JarPurpose.objects.all()
-        queryset = result.values()
-        return JsonResponse({"models_to_return": list(queryset)})
-
-    if request.GET.get('keywords'):
-        keywords = request.GET.get('keywords')
-        if keywords is not "":
-            result = JarPurpose.objects.all()
-
             queryset = result.values()
             return JsonResponse({"models_to_return": list(queryset)})
+
+
+    if request.GET.get('puprosetext'):
+        keywords = request.GET.get('puprosetext')
+        request.session.get('session')['purposetext'] = keywords
+        request.session.modified = True
+
 
     return JsonResponse("Type in a Jar name", safe=False)
 
 
 def tocheckout(request):
     jar = request.POST.get('jarnumber')
-    # purpose = request.POST.get('purpose')
+    purpose = request.POST.get('purpose')
     firstname = request.POST.get('firstname')
     lastname = request.POST.get('lastname')
     email = request.POST.get('email')
@@ -118,7 +117,7 @@ def tocheckout(request):
     checkout = StoreCheckoutData(first_name=firstname, last_name=lastname, email=email, address1=address,
                                  address2=address2,
                                  country=country, state=state, zip=zip, paymentMethod=paymentmethod,
-                                 order_details=jar + " ")
+                                 order_details=jar + " " + purpose + " ")
     checkout.save()
     orderId = checkout.pk
 
@@ -221,13 +220,23 @@ def tocheckout(request):
 
 
 def payment(request):
-    buy_jar_number = request.session.get('session')['buy']
-    # purpose = request.session.get('session')['purpose']
+    jar_number = request.session.get('session')['buy']
+    buy_jar_data = Jar.objects.get(jar_number__iexact=jar_number)
+    purpose = request.session.get('session')['purpose']
+    if purpose == "Guided":
+        price = "%.2f" % 75.00
+    elif purpose == "General":
+        price = "%.2f" % 27.50
+    elif purpose == "Personal":
+        price = "%.2f" % 42.50
 
+    print(buy_jar_data)
     context = {
 
-        'jar': buy_jar_number,
-        # 'purpose': purpose,
+        'jar': buy_jar_data,
+        'purpose': purpose,
+        'price':str(price),
+        'keywords': request.session.get('session')['purposetext']
 
     }
 

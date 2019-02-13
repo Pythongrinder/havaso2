@@ -30,7 +30,8 @@ def check_set_session(request):
             'ip': ip,
             'products': [],
             'buy': "",
-            'purpose': ""
+            'purpose': "",
+            'purposetext': '',
         }
         current_session_state = request.session.get('session')
         return current_session_state

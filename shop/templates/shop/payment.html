@@ -14,14 +14,16 @@
                 <ul class="list-group mb-3">
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
-                            <h6 class="my-0">{{ jar }}</h6>
-                            <small class="text-muted">{{ purpose }}</small>
+                            <h6 class="my-0">Jar Name: {{ jar.jar_name }} - {{ purpose }}</h6>
+                            <small class="text-muted"> Decorated by {{ jar.decorator }}{{ purpose }}</small>
+                            <br>
+                            <small class="text-muted"> Purpose: {{ keywords }}</small>
                         </div>
                         <span class="text-muted">$ {{ price }} </span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
                         <span>Total (USD)</span>
-                        <strong>$00.00</strong>
+                        <strong>${{ price }}</strong>
                     </li>
                 </ul>
 
@@ -33,8 +35,10 @@
 
                 <form class="needs-validation" enctype="multipart/form-data" method="post" id="pay" action="/shop/tocheckout/">
                     {% csrf_token %}
-                    <input name="jarnumber" type="hidden" value="{{ jar }}">
+                    <input name="jarnumber" type="hidden" value="{{ jar.jar_name }}">
                     <input name="jarpurpose" type="hidden" value="{{ purpose }}">
+                    <input name="jarkeyword" type="hidden" value="{{ keywords }}">
+
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="firstName">First name</label>
@@ -355,16 +359,16 @@
                     <h4 class="mb-3 text-left">Payment Method</h4>
                     <div class="d-block text-left">
                         <div class="custom-control custom-radio">
-                            <input id="credit" name="paymentMethod" value="credit" type="radio" class="custom-control-input" checked
+                            <input id="credit" name="paymentMethod" disabled value="credit" type="radio" class="custom-control-input"
                                    required>
                             <label class="custom-control-label" for="credit">Credit card</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input id="bitcoin" name="paymentMethod" value="bitcoin" type="radio" class="custom-control-input" required>
+                            <input id="bitcoin" name="paymentMethod" value="bitcoin" type="radio" class="custom-control-input" checked required>
                             <label class="custom-control-label" for="bitcoin">Bitcoin</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input id="paypal" name="paymentMethod" value="paypal" type="radio" class="custom-control-input" required>
+                            <input id="paypal" name="paymentMethod" disabled value="paypal" type="radio" class="custom-control-input" required>
                             <label class="custom-control-label" for="paypal">Paypal</label>
                         </div>
                     </div>

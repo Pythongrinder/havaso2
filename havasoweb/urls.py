@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')),
     path('album/', include('album.urls')),
+    path('legal/', include('legal.urls')),
     path(r'tinymce/', include('tinymce.urls')),
     path(r'wishlist/', include('wishlist.urls')),
     path(r'shop/', include('shop.urls')),
