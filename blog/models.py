@@ -5,16 +5,23 @@ from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
 from autoslug import AutoSlugField
 
-class Category (models.Model):
+
+class Category(models.Model):
     name = models.CharField(max_length=100)
-    position = models.CharField(max_length=100)
+    positions = (
+        ('General', 'General'),
+        ('Jars', 'Jars'),
+    )
+    position = models.CharField(max_length=100,
+                                choices=positions,
+                                default='General')
     private = models.BooleanField(null=False)
 
     def __str__(self):
         return self.name
 
 
-class Post (models.Model):
+class Post(models.Model):
     title = models.CharField(max_length=100)
     featured_image = models.FileField(upload_to='blog', default='')
     content = RichTextField()
@@ -23,7 +30,8 @@ class Post (models.Model):
     permission = (
         ('Not set', 'Not set'),
         ('Yes, can be published', 'Yes, can be published'),
-        ('No, needs more work and re-edited again before publishing', 'No, needs more work and re-edited again before publishing'),
+        ('No, needs more work and re-edited again before publishing',
+         'No, needs more work and re-edited again before publishing'),
     )
     permission_to_publish = models.CharField(
         max_length=1000,
@@ -42,4 +50,3 @@ class Post (models.Model):
         title = self.title + " Category: "
         category = ",".join([str(p) for p in self.categories.all()])
         return title + category
-

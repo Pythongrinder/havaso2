@@ -33,6 +33,17 @@ class Jar(models.Model):
     production_date = models.DateTimeField(default=timezone.now)
     product_details = models.ForeignKey(Product, on_delete=models.PROTECT, blank=True, null=True)
     sold_to = models.ForeignKey(CheckOut, on_delete=models.PROTECT, blank=True, null=True)
+    status_options = (
+        ('Available', 'Available'),
+        ('Sold', 'Sold'),
+        ('Historic Album', 'Historic Album'),
+        ('Damaged', 'Damaged'),
+    )
+    jar_status = models.CharField(
+        max_length=100,
+        choices=status_options,
+        default='Available'
+    )
 
     def __str__(self):
         return self.jar_name

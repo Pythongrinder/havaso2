@@ -73,68 +73,33 @@ $('#goToPrevSlide').on('click', function () {
 $('#goToNextSlide').on('click', function () {
     slider.goToNextSlide();
 });
-
-
     });
 
 
 
-    $(document).ready(function() {
+$(document).ready(function() {
     $(".getid").click(function(event) {
         var alt = $(this).children("img").attr("alt");
         var src = $(this).children("img").attr("src");
         var id = $(this).children("input").attr("value");
         var decorator = $(this).children(".decorator").attr("value");
+        var status = $(this).children(".status").attr("value");
         $('.jar-title').text(event.target.id)
         $('#decorator').text("Decorator: "+decorator)
         $('.description').text(alt)
         $('.jar-img-album').attr("src", src);
         $('#jarnumber').attr("value", id);
 
+        if (status === "Available") {
+        $('#jarnumber').prop("disabled", false);
+        $('#jarnumber').text("Buy")
+        $('#addwishlist').prop("disabled", false);
+
+        } else {
+            $('#jarnumber').prop("disabled", true);
+            $('#jarnumber').text("SOLD")
+            $('#addwishlist').prop("disabled", true);
+        }
 
     });
-});
-
-// this is the id of the form
-$("#addwishlist").click(function() {
-
-    var url = '/wishlist/add/';
-    var jarnumber = $('#jarnumber').attr("value");
-    var data = {jar: jarnumber}
-
-    $.ajax({
-           type: "POST",
-           url: url,
-           data: data,
-           success: function(data)
-           {
-
-              console.log(data)
-
-           }
-         });
-
-
-});
-
-
-// this is the id of the form
-$(document).on('click', '.buyjar', function() {
-
-    var url = '/wishlist/add/';
-    var jarnumber = $(this).attr("value");
-    var data = {buyjar: jarnumber}
-    $.ajax({
-           type: "POST",
-           url: url,
-           data: data,
-           success: function(data)
-           {
-
-              window.location.href = "/shop/"
-
-           }
-         });
-
-
 });

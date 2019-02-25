@@ -36,5 +36,5 @@ class CheckOut(models.Model):
     paymentResponse = models.CharField(max_length=100, default="Unpaid")
 
     def __str__(self):
-        return str(self.id)
+        return str(self.email)
 

@@ -3,6 +3,7 @@ from autoslug import AutoSlugField
 from album.models import Jar
 import string
 import random
+from django.utils import timezone
 
 
 # Create your models here.
@@ -15,6 +16,7 @@ class SentWishlist(models.Model):
     email = models.CharField(max_length=100, blank=True, default=None)
     wishlistedjars = models.ManyToManyField(Jar, blank=True, default=None)
     url_ref = AutoSlugField(default=rand_slug(), unique=True)
+    date_created = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.email

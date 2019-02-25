@@ -12,6 +12,7 @@ from django.contrib.sites.models import Site
 
 description = "Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros."
 
+
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
@@ -32,6 +33,7 @@ def check_set_session(request):
             'buy': "",
             'purpose': "",
             'purposetext': '',
+            'invoice': '',
         }
         current_session_state = request.session.get('session')
         return current_session_state
@@ -39,14 +41,12 @@ def check_set_session(request):
         return current_session_state
 
 
-
 def index(request):
-
-    context =  {
-        'title' : 'Homepage',
-        'description' : WebContent.objects.get(position__iexact="HomePageDescriptionText"),
-         'posts' : Post.objects.all().order_by('-date_created')[:3],
-        }
+    context = {
+        'title': 'Homepage',
+        'description': WebContent.objects.get(position__iexact="HomePageDescriptionText"),
+        'posts': Post.objects.filter(categories__position='Jars').order_by('-date_created')[:3],
+    }
 
     print(Site.objects.get_current())
     print(check_set_session(request))
@@ -62,9 +62,8 @@ def about(request):
     request.session.clear()
     return render(request, 'home/about.html', context)
 
+
 def page(request):
-
-
     content = request.GET
     print(content['page'])
 
@@ -75,15 +74,13 @@ def page(request):
     return render(request, 'home/about.html', context)
 
 
-
 def contact(request):
-
     form = ContactForm()
 
-    context =  {
-        'title' : 'Contact Us',
-         'form': form
-        }
+    context = {
+        'title': 'Contact Us',
+        'form': form
+    }
 
     if request.method == "POST":
         form = ContactForm(request.POST)
@@ -98,5 +95,3 @@ def contact(request):
         form = ContactForm()
 
     return render(request, 'home/contact.html', context)
-
-

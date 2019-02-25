@@ -1,0 +1,16 @@
+<div class="thumbnail center well well-sm text-center">
+                    <h2>Newsletter</h2>
+                    <p>Subscribe to our weekly Newsletter and stay tuned.</p>
+                    <div id="alerts"></div>
+
+                    <form enctype="multipart/form-data" method="post" action="/newsletter/newsletter/subscribe/"
+                          id="subscribe">
+                        {% csrf_token %}
+                        <input type="email" class="form-control" name="email_field" required="" id="id_email_field"
+                               placeholder="Email">
+                        <button id="id_submit" name="submit" class="btn btn-large btn-outline-secondary btn-subscribe"
+                                value="Subscribe" type="submit">Subscribe
+                        </button>
+                    </form>
+
+</div>
