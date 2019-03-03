@@ -266,7 +266,7 @@ def thankyou(request):
             request.session.modified = True
     return render(request, 'shop/thankyou.html')
 
-
+@csrf_exempt
 def paypal(request):
     VERIFY_URL_PROD = 'https://ipnpb.paypal.com/cgi-bin/webscr'
     VERIFY_URL_TEST = 'https://ipnpb.sandbox.paypal.com/cgi-bin/webscr'
