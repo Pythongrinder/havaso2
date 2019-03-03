@@ -274,7 +274,10 @@ $("#pay").submit(function(e) {
         url: url,
         data: form.serialize(), // serializes the form's elements.
         success: function(data) {
-            if (data === "Paypal"){
+            if ( data.includes("Paypal") ) {
+
+            var part = data.split(' ');
+            $('#PaypalSubmit').prepend('<input type="hidden" name="custom" value="orderInvoice:'+ part[1] +'">');
             $('#PaypalSubmit').submit();
             } else {
             window.location.href = data

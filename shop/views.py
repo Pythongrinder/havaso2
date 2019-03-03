@@ -19,9 +19,8 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-import sys
-import urllib.parse
-import requests
+import string
+import random
 
 
 def shop(request):
@@ -177,7 +176,15 @@ def tocheckout(request):
     order_id = checkout.pk
 
     if paymentmethod == 'paypal':
-        return JsonResponse("Paypal", safe=False)
+        def id_generator(size=21, chars=string.ascii_uppercase + string.digits):
+            return ''.join(random.choice(chars) for _ in range(size))
+        invoice = id_generator()
+        checkout.paymentInvoice = invoice
+        checkout.save()
+        request.session.get('session')['invoice'] = invoice
+        request.session.modified = True
+
+        return JsonResponse("Paypal " + invoice, safe=False)
 
     if paymentmethod == 'bitcoin':
         fetch_token("merchant")
@@ -287,6 +294,9 @@ def paypal(request):
     # Check return message and take action as needed
     if r.text == 'VERIFIED':
         print('VERIFIED')
+        invoice = answer['custom'].split(':', 1)[1]
+        print(invoice)
+        StoreCheckoutData.objects.filter(paymentInvoice=invoice).update(paymentResponse='Complete')
         pass
     elif r.text == 'INVALID':
         print('INVALID')
