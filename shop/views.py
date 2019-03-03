@@ -19,6 +19,9 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+import sys
+import urllib.parse
+import requests
 
 
 def shop(request):
@@ -173,6 +176,9 @@ def tocheckout(request):
     checkout.save()
     order_id = checkout.pk
 
+    if paymentmethod == 'paypal':
+        return JsonResponse("Paypal", safe=False)
+
     if paymentmethod == 'bitcoin':
         fetch_token("merchant")
         print("We will create an invoice using the merchant facade")
@@ -215,6 +221,7 @@ def payment(request):
 def thankyou(request):
     if request.session.get('session')['invoice'] != "":
         jar_number = request.session.get('session')['buy']
+
         def get_from_bitpay_api(client, uri, token):
             pp = pprint.PrettyPrinter(indent=4)
             payload = "?token=%s" % token
@@ -250,7 +257,7 @@ def thankyou(request):
                 'purpose': request.session.get('session')['purpose'],
                 # 'address': order_details.address1
 
-                                                               })  # render with dynamic value
+            })  # render with dynamic value
             text_content = strip_tags(html_content)  # Strip the html tag. So people can see the pure text at least.
             msg = EmailMultiAlternatives(subject, text_content, from_email, [order_details.email])
             msg.attach_alternative(html_content, "text/html")
@@ -258,3 +265,41 @@ def thankyou(request):
             request.session.get('session')['buy'], request.session.get('session')['invoice'] = "", ""
             request.session.modified = True
     return render(request, 'shop/thankyou.html')
+
+
+def paypal(request):
+    VERIFY_URL_PROD = 'https://ipnpb.paypal.com/cgi-bin/webscr'
+    VERIFY_URL_TEST = 'https://ipnpb.sandbox.paypal.com/cgi-bin/webscr'
+
+    # Switch as appropriate
+    VERIFY_URL = VERIFY_URL_TEST
+
+    # CGI preamble
+    print('content-type: text/plain')
+    print(request.POST.dict())
+
+    # # Read and parse query string
+    # param_str = sys.stdin.readline().strip()
+    # params = urllib.parse.parse_qsl(param_str)
+    #
+    # # Add '_notify-validate' parameter
+    # params.append(('cmd', '_notify-validate'))
+    #
+    # # Post back to PayPal for validation
+    #
+    # headers = {'content-type': 'application/x-www-form-urlencoded',
+    #            'user-agent': 'Python-IPN-Verification-Script'}
+    # r = requests.post(VERIFY_URL, params=params, headers=headers, verify=True)
+    # r.raise_for_status()
+    #
+    # # Check return message and take action as needed
+    # if r.text == 'VERIFIED':
+    #     print('VERIFIED')
+    #     pass
+    # elif r.text == 'INVALID':
+    #     print('INVALID')
+    #     pass
+    # else:
+    #     pass
+
+    return JsonResponse("Thanks!", safe=False)

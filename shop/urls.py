@@ -10,5 +10,6 @@ path('select/', views.Selectjar, name='selectjar'),
 path('getcheckout/', views.Checkout, name='getcheckout'),
 path('thankyou/', views.thankyou, name='shop'),
 path('tocheckout/', views.tocheckout, name='shop'),
+path('paypalipn/', views.paypal, name='shop'),
 
 ]

@@ -48,8 +48,8 @@ $(".next").click(function() {
         animating = true;
         next_fs.show();
         $("#shopselector").hide();
-        $('#shoppage2').prepend('<div class="boxtitle"><h2 class="fs-title">Step 2 - General Jar</h2>' +
-            '<p>You have chosen a General Jar.</p> <p> Price: € 42,50</p> <p>Describe the purpose for your jar.</p>' +
+        $('#shoppage2').prepend('<div class="boxtitle"><h2 class="fs-title">Step 2 - Personal Jar</h2>' +
+            '<p>You have chosen a Personal Jar.</p> <p> Price: € 42,50</p> <p>Describe the purpose for your jar.</p>' +
             '<textarea id="textInput" rows="4" cols="50"> </textarea>' +
             '<small class="text-muted">Please give a short description of your goal or objective. May be keywords.</small></div>')
 
@@ -67,8 +67,8 @@ $(".next").click(function() {
         /// WORKING
 
     } else if (purpose === 'General') {
-        $('#shoppage2').prepend('<div class="boxtitle"><h2 class="fs-title">Step 2 - Personal Jar</h2>' +
-            '<p>You have chosen a Personal Jar.</p> <p> Price: €27.50 </p> <p>Find your purpose</p></div>')
+        $('#shoppage2').prepend('<div class="boxtitle"><h2 class="fs-title">Step 2 - General Jar</h2>' +
+            '<p>You have chosen a General Jar.</p> <p> Price: €27.50 </p> <p>Find your purpose</p></div>')
         animating = true;
         var url = '/shop/getcheckout/';
         var data = {
@@ -274,7 +274,11 @@ $("#pay").submit(function(e) {
         url: url,
         data: form.serialize(), // serializes the form's elements.
         success: function(data) {
+            if (data === "Paypal"){
+            $('#PaypalSubmit').submit();
+            } else {
             window.location.href = data
+            }
         }
     });
 
