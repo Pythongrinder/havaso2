@@ -43,7 +43,7 @@ def fetch_token(facade):
         print("token is: %s" % client.tokens[facade])
         f = open(TOKEN_FILE + facade, 'w')
         f.write(client.tokens[facade])
-        f.close() 
+        f.close()
 
 def get_from_bitpay_api(client, uri, token):
     payload = "?token=%s" % token
