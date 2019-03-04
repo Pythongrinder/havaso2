@@ -21,14 +21,18 @@
 
                 <!-- multistep form -->
                 <form id="msform">
-                    <!-- progressbar -->
+                    {% if product.jar_status == "Sold" %}
+                    <fieldset>
+                    <h2 class="fs-title">Unfortunately the Jar was bought by someone.</h2>
+                    <a style="text-decoration:none;" href="/album"><input type="button" value="Return to Album" class="btn btn-primary btn-lg btn-block"/></a>
+                    </fieldset>
+                        {% else %}
+                       <!-- progressbar -->
                     <ul id="progressbar">
                         <li class="active">Account Setup</li>
                         <li>Social Profiles</li>
                         <li>Personal Details</li>
                     </ul>
-
-
                     <!-- fieldsets -->
                     <fieldset>
                         <h2 class="fs-title">Fantastic you've found your jar.</h2>
@@ -55,7 +59,7 @@
                         <input type="button" name="previous"
                                class="previous btn btn-large btn-outline-secondary btn-subscribe" value="Previous"/>
                     </fieldset>
-
+                    {% endif%}
                 </form>
             </div>
         </div>

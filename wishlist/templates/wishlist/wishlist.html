@@ -22,9 +22,15 @@
                             <td> {{ jar.jar_name }} <p>Decorated by {{ decorator|get_item:jar.decorator_id}} </p></td>
 
                             <td class="text-right">
+                                {% if jar.jar_status == "Sold" %}
+                                <button value="{{ jar.jar_number }}" disabled class="btn btn-sm btn-dark">Sold</button>
+                                {% else %}
                                 <button value="{{ jar.jar_number }}" class="btn btn-sm btn-success buyjar">Buy</button>
+                                {% endif %}
                             </td>
                         </tr>
+                          </tbody>
+                    </table>
                         {% endfor %}
                         {% else %}
                         </tbody>

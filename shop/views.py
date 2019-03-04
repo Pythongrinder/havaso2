@@ -92,8 +92,17 @@ def shop(request):
     print(request.session.get('session'))
     if buy_jar_number:
         product = Jar.objects.select_related('product_details').get(jar_number__iexact=buy_jar_number)
+        if product.jar_status == "Sold":
+            request.session.get('session')['products'].remove(buy_jar_number)
+            request.session.get('session')['buy'] = ""
+            request.session.modified = True
+
     elif len(wishlist_jar_number) == 1:
         product = Jar.objects.select_related('product_details').get(jar_number__iexact=wishlist_jar_number[0])
+        if product.jar_status == "Sold":
+            request.session.get('session')['products'].remove(buy_jar_number)
+            request.session.get('session')['buy'] = ""
+            request.session.modified = True
     else:
         product = None
 
@@ -106,6 +115,7 @@ def shop(request):
         'product': product,
         'itemswishlisted': SeveralItemsWishlisted
     }
+
 
     return render(request, 'shop/shop.html', context)
 

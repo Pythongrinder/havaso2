@@ -110,7 +110,7 @@ def wishlist(request):
     decorators = Decorator.objects.filter(id__in=jars.wishlistedjars.values_list('decorator_id'))
 
     time_between_insertion = datetime.now(timezone.utc) - jars.date_created
-
+    print(jars.wishlistedjars.values())
     if time_between_insertion.days < 30:
         context = {
             'decorator': decorators,
