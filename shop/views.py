@@ -260,7 +260,7 @@ def thankyou(request):
                 Jar.objects.filter(jar_number=jar_number).update(jar_status='Sold')
                 request.session.get('session')['buy'], request.session.get('session')['invoice'] = "", ""
                 request.session.modified = True
-        elif checkout_object == "paypal":
+        elif checkout_object.values('paymentMethod')[0]['paymentMethod'] == "paypal":
             if checkout_object.values('paymentResponse')[0]['paymentResponse'] == "Complete":
                 Jar.objects.filter(jar_number=jar_number).update(jar_status='Sold')
                 request.session.get('session')['buy'], request.session.get('session')['invoice'] = "", ""
