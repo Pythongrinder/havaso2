@@ -1,0 +1,1 @@
+print("0 10 * * *  python3 [folder here]/manage.py wishlist_email")

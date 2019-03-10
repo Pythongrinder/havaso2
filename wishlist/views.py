@@ -1,3 +1,4 @@
+from __future__ import absolute_import, unicode_literals
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from album.models import Jar, Decorator
@@ -85,7 +86,7 @@ def sendwishlistemail(request):
         a.save()
         a.wishlistedjars.set(jars_objects)
 
-        subject, from_email = 'Subject', 'support@havaso.com',
+        subject, from_email = 'Your Medicine Jar Wish List', 'support@havaso.com',
         link = str(get_current_site(request)) + '/wishlist/?wishlist=' + str(a.url_ref)
         html_content = render_to_string('wishlist/mail.html', {'link': link})  # render with dynamic value
         text_content = strip_tags(html_content)  # Strip the html tag. So people can see the pure text at least.
@@ -106,15 +107,15 @@ def wishlist(request):
 
     check_set_session(request)
     wish_list_slug = request.GET.get("wishlist")
-    jars = SentWishlist.objects.get(url_ref=wish_list_slug)
-    decorators = Decorator.objects.filter(id__in=jars.wishlistedjars.values_list('decorator_id'))
+    wish_list_object = SentWishlist.objects.get(url_ref=wish_list_slug)
+    decorators = Decorator.objects.filter(id__in=wish_list_object.wishlistedjars.values_list('decorator_id'))
 
-    time_between_insertion = datetime.now(timezone.utc) - jars.date_created
-    print(jars.wishlistedjars.values())
+    time_between_insertion = datetime.now(timezone.utc) - wish_list_object.date_created
+    print(wish_list_object.wishlistedjars.values())
     if time_between_insertion.days < 30:
         context = {
             'decorator': decorators,
-            'jars': jars.wishlistedjars.values(),
+            'jars': wish_list_object.wishlistedjars.values(),
             'posts': Post.objects.all().order_by('-date_created')[:3],
         }
     else:

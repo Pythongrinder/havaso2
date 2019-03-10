@@ -1,7 +1,5 @@
 from django.shortcuts import render
-
-# Create your views here.
-# Create your views here.
+from shop.tasks import after_sale_email
 from album.models import Jar, JarPurpose
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -16,9 +14,6 @@ import json
 import re
 import os.path
 from django.contrib.sites.shortcuts import get_current_site
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import render_to_string
-from django.utils.html import strip_tags
 import string
 import random
 
@@ -233,6 +228,10 @@ def tocheckout(request):
 
 def payment(request):
     jar_number = request.session.get('session')['buy']
+
+    if jar_number == '':
+        jar_number = request.session.get('session')['products'][0]
+
     buy_jar_data = Jar.objects.get(jar_number__iexact=jar_number)
     purpose = request.session.get('session')['purpose']
     if purpose == "Guided":
@@ -256,9 +255,14 @@ def payment(request):
 
 
 def thankyou(request):
-    print(request.build_absolute_uri())
+    sold = False
     if request.session.get('session')['invoice'] != "":
+
         jar_number = request.session.get('session')['buy']
+
+        if jar_number == '':
+            jar_number = request.session.get('session')['products'][0]
+
         invoiceId = request.session.get('session')['invoice']
         checkout_object = StoreCheckoutData.objects.filter(paymentInvoice=invoiceId)
         if checkout_object.values('paymentMethod')[0]['paymentMethod'] == "bitcoin":
@@ -267,29 +271,21 @@ def thankyou(request):
             invoice = get_from_bitpay_api(client, client.uri + "/invoices/" + invoiceId, token)
             StoreCheckoutData.objects.filter(paymentInvoice=invoiceId).update(paymentResponse=invoice['status'])
             if invoice['status'] == "confirmed" or invoice['status'] == "complete":
-                Jar.objects.filter(jar_number=jar_number).update(jar_status='Sold')
-                request.session.get('session')['buy'], request.session.get('session')['invoice'] = "", ""
-                request.session.modified = True
+                sold = True
         elif checkout_object.values('paymentMethod')[0]['paymentMethod'] == "paypal":
             if checkout_object.values('paymentResponse')[0]['paymentResponse'] == "Complete":
-                Jar.objects.filter(jar_number=jar_number).update(jar_status='Sold')
-                request.session.get('session')['buy'], request.session.get('session')['invoice'] = "", ""
-                request.session.modified = True
-
-        order_details = StoreCheckoutData.objects.get(paymentInvoice=invoiceId)
-
-        # subject, from_email = 'Subject', 'support@havaso.com',
-        # html_content = render_to_string('shop/mail.html', {
-        #
-        #     'purpose': request.session.get('session')['purpose'],
-        #     # 'address': order_details.address1
-        #
-        # })  # render with dynamic value
-        # text_content = strip_tags(html_content)  # Strip the html tag. So people can see the pure text at least.
-        # msg = EmailMultiAlternatives(subject, text_content, from_email, [order_details.email])
-        # msg.attach_alternative(html_content, "text/html")
-        # msg.send()
-
+                sold = True
+        if sold:
+            # Jar.objects.filter(jar_number=jar_number).update(jar_status='Sold')
+            jar_number = Jar.objects.get(jar_number=jar_number)
+            # request.session.get('session')['buy'], request.session.get('session')['invoice'] = "", ""
+            # request.session.modified = True
+            order_details = StoreCheckoutData.objects.get(paymentInvoice=invoiceId)
+            purpose = request.session.get('session')['purpose']
+            print(order_details.address1)
+            after_sale_email.delay(purpose, order_details.email, order_details.first_name, order_details.last_name,
+                                   order_details.address1, order_details.address2, jar_number.jar_name)
+    print(sold)
     return render(request, 'shop/thankyou.html')
 
 

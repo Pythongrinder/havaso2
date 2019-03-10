@@ -6,60 +6,69 @@
 </head>
 <body>
 
-<p>Thank you for ordering your {{ purpose }} purpose Jar.
-What will happen next?
+<p>Thank you for ordering your {{ purpose }} purpose Jar.</p>
+<p>What will happen next?</p>
 
 {% if purpose == 'General' %}
-We will prepare Jar no. [JarName], close it and seal it. Sun and moon will shine over the jar to
-transform it into your Medicine Jar. There after your Jar gets boxed, packaged and shipped.
-We will ship your Jar to:
-[FullName]
-[FullAdress]
-You’ll receive an email when your Jar is shipped.
-In case you have questions or are not sure about any part of the process, please contact us
-[mailto:sales@havaso.com] or simply reply to this email.
-Regards
-CNG/Havaso Team.
+<p>We will prepare Jar no. {{ JarName }}, close it and seal it. Sun and moon will shine over the jar to
+    transform it into your Medicine Jar.</p>
+
+<p>There after your Jar gets boxed, packaged and shipped.
+<br>
+We will ship your Jar to:</p>
+<p>{{ FullName }}</p>
+<p>{{ Address }}</p>
+<p>You’ll receive an email when your Jar is shipped.</p>
+<p>In case you have questions or are not sure about any part of the process, please contact us
+    [mailto:sales@havaso.com] or simply reply to this email.
+<p>
+<p>Regardss</p>
+<p>CNG/Havaso Team.</p>
 {% endif %}
 
 {% if purpose == 'Personal' %}
-You ordered Jar no. [JarName] and gave [Goal and/or keywords] as your Purpose during the
-order process.
-As your chosen purpose is unique we first need to translate this to a fitting composition of the
-right ingredients. Your jar, filled with the composition, will be closed, sealed and placed outside
-so the Sun and the Moon can shine over it.
-The resulting Medicine Jar gets checked and, if indeed conform, is boxed, packaged and
-shipped.
-We will ship your Jar to:
-[FullName]
-[FullAdress]
-You’ll receive an email when your Jar is shipped.
-In case you have questions or are not sure about any part of the process, please contact us at
-[sales@havaso.com] or simply reply to this email.
-Regards
-CNG/Havaso Team.
+<p> You ordered Jar no {{ JarName }} and gave [Goal and/or keywords] as your Purpose during the
+    order process.</p>
+<p>As your chosen purpose is unique we first need to translate this to a fitting composition of the
+    right ingredients. Your jar, filled with the composition, will be closed, sealed and placed outside
+    so the Sun and the Moon can shine over it.</p>
+<p>The resulting Medicine Jar gets checked and, if indeed conform, is boxed, packaged and
+    shipped.</p>
+<p>We will ship your Jar to:</p>
+<p>{{ FullName }}</p>
+<p>{{ Address }}</p>
+<p>You’ll receive an email when your Jar is shipped.</p>
+<p>In case you have questions or are not sure about any part of the process, please contact us at
+    [sales@havaso.com] or simply reply to this email.</p>
+<p>
+    Regards
+    <br>
+    CNG/Havaso Team.
+</p>
 {% endif %}
 
 {% if purpose == 'Guided' %}
-During the order process you’ve picked [Date from Appointment picker] at [time from
-appointment picker] for our ±30 min call. This call is meant to guide you to determine the
-purpose for your jar. You’ll receive an email with instructions to prepare yourself for the call
-soon.
-When the purpose has become clear we can compose the ingredients to reflect the intent. In
+<p>During the order process you’ve picked [Date from Appointment picker] at [time from
+    appointment picker] for our ±30 min call. This call is meant to guide you to determine the
+    purpose for your jar. You’ll receive an email with instructions to prepare yourself for the call
+    soon.</p>
 
-some cases this can several days. When we feel the composition is fitting we will fill Jar no
-[JarName], close and seal it. After a 24 hour cycle of Sun- and Moonshine outside your Jar is
-ready.
-The resulting Medicine Jar gets checked and, if indeed conform, is boxed, packaged and
-shipped.
-We will ship your jar to:
-[FullName]
-[FullAdress]
-You’ll receive an email when your Jar is shipped.
-In case you have questions or are not sure about any part of the process, please contact us
-[mailto:sales@havaso.com] or simply reply to this email.
-Regards
-CNG/Havaso Team.
+<p>When the purpose has become clear we can compose the ingredients to reflect the intent. In
+    some cases this can several days. When we feel the composition is fitting we will fill Jar no
+    [JarName], close and seal it. After a 24 hour cycle of Sun- and Moonshine outside your Jar is
+    ready.</p>
+
+<p>The resulting Medicine Jar gets checked and, if indeed conform, is boxed, packaged and
+    shipped.</p>
+
+<p>We will ship your jar to:</p>
+<p>{{ FullName }}</p>
+<p>{{ Address }}</p>
+<p>You’ll receive an email when your Jar is shipped.</p>
+<p>In case you have questions or are not sure about any part of the process, please contact us
+    [mailto:sales@havaso.com] or simply reply to this email.</p>
+<p>Regards</p>
+<p>CNG/Havaso Team.</p>
 {% endif %}
 </p>
 </body>
