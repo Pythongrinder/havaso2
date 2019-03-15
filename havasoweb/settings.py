@@ -13,8 +13,6 @@ from havasoweb.settings_general import *
 
 ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1']
 
-SITE_ID = 8
-
 website = "0.0.0.0:8989"
 
 CELERY_BROKER_URL = "amqp://localhost//"
@@ -28,3 +26,5 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+SITE_ID = 5

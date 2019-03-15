@@ -44,7 +44,7 @@ def check_set_session(request):
 def index(request):
     context = {
         'title': 'Homepage',
-        'description': WebContent.objects.get(position__iexact="HomePageDescriptionText"),
+        'description': WebContent.objects.get(position="HomePageDescriptionText"),
         'posts': Post.objects.filter(categories__position='Jars').order_by('-date_created')[:3],
     }
 
@@ -56,7 +56,7 @@ def index(request):
 
 def about(request):
     context = {
-        'AboutText': WebContent.objects.get(position__iexact="AboutPageText")
+        'AboutText': WebContent.objects.get(position="AboutPageText")
     }
     print(request.session.get('session'))
     request.session.clear()
@@ -68,7 +68,7 @@ def page(request):
     print(content['page'])
 
     context = {
-        'AboutText': WebContent.objects.get(position__iexact=content['page'])
+        'AboutText': WebContent.objects.get(position=content['page'])
     }
     print(request.session.get('wishlist'))
     return render(request, 'home/about.html', context)
