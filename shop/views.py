@@ -10,8 +10,6 @@ import bitpay.key_utils as bku
 from bitpay.client import *
 import pprint
 import requests
-import json
-import re
 import os.path
 from django.contrib.sites.shortcuts import get_current_site
 import string
@@ -57,7 +55,6 @@ def fetch_token(facade):
         f = open(TOKEN_FILE + facade, 'w')
         f.write(client.tokens[facade])
         f.close()
-
 
 
 def get_from_bitpay_api(client, uri, token):
@@ -111,7 +108,6 @@ def shop(request):
         'itemswishlisted': SeveralItemsWishlisted
     }
 
-
     return render(request, 'shop/shop.html', context)
 
 
@@ -137,7 +133,7 @@ def Selectjar(request):
 
             if result.count() > 0:
                 if str(list(result.values('jar_number'))[0]['jar_number']) not in request.session['session'][
-                    'products']:
+                        'products']:
                     request.session['session']['products'].append(
                         str(list(result.values('jar_number'))[0]['jar_number']))
                     request.session.get('session')['buy'] = str(list(result.values('jar_number'))[0]['jar_number'])
@@ -257,35 +253,33 @@ def payment(request):
 def thankyou(request):
     sold = False
     if request.session.get('session')['invoice'] != "":
-
         jar_number = request.session.get('session')['buy']
-
         if jar_number == '':
             jar_number = request.session.get('session')['products'][0]
 
-        invoiceId = request.session.get('session')['invoice']
-        checkout_object = StoreCheckoutData.objects.filter(paymentInvoice=invoiceId)
+        invoice_id = request.session.get('session')['invoice']
+        checkout_object = StoreCheckoutData.objects.filter(paymentInvoice=invoice_id)
         if checkout_object.values('paymentMethod')[0]['paymentMethod'] == "bitcoin":
             fetch_token("merchant")
             token = client.tokens['merchant']
-            invoice = get_from_bitpay_api(client, client.uri + "/invoices/" + invoiceId, token)
-            StoreCheckoutData.objects.filter(paymentInvoice=invoiceId).update(paymentResponse=invoice['status'])
+            invoice = get_from_bitpay_api(client, client.uri + "/invoices/" + invoice_id, token)
+            StoreCheckoutData.objects.filter(paymentInvoice=invoice_id).update(paymentResponse=invoice['status'])
             if invoice['status'] == "confirmed" or invoice['status'] == "complete":
                 sold = True
         elif checkout_object.values('paymentMethod')[0]['paymentMethod'] == "paypal":
             if checkout_object.values('paymentResponse')[0]['paymentResponse'] == "Complete":
                 sold = True
         if sold:
-            # Jar.objects.filter(jar_number=jar_number).update(jar_status='Sold')
+            Jar.objects.filter(jar_number=jar_number).update(jar_status='Sold')
             jar_number = Jar.objects.get(jar_number=jar_number)
-            # request.session.get('session')['buy'], request.session.get('session')['invoice'] = "", ""
-            # request.session.modified = True
-            order_details = StoreCheckoutData.objects.get(paymentInvoice=invoiceId)
+            request.session.get('session')['buy'], request.session.get('session')['invoice'] = "", ""
+            request.session.modified = True
+            order_details = StoreCheckoutData.objects.get(paymentInvoice=invoice_id)
             purpose = request.session.get('session')['purpose']
             print(order_details.address1)
             after_sale_email.delay(purpose, order_details.email, order_details.first_name, order_details.last_name,
                                    order_details.address1, order_details.address2, jar_number.jar_name)
-    print(sold)
+            print(sold)
     return render(request, 'shop/thankyou.html')
 
 
