@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from blog.models import Post
 
+
 # Create your views here.
 def blog(request):
-
     content = request.GET
 
     try:
@@ -17,7 +17,7 @@ def blog(request):
         single = False
 
     context = {
-        'single' : single,
+        'single': single,
         'post': post,
         'posts': Post.objects.all().order_by('-date_created')[:3],
     }
