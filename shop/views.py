@@ -3,7 +3,7 @@ from shop.tasks import after_sale_email
 from album.models import Jar, JarPurpose
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from home.views import check_set_session
+from havasoweb.session import check_set_session
 from shop.models import CheckOut as StoreCheckoutData
 from bitpay.exceptions import *
 import bitpay.key_utils as bku

@@ -1,0 +1,29 @@
+<div class="row">
+    {% for post in posts %}
+    <div class="col-md-4">
+        <div class="card mb-4 shadow-sm blogpost">
+            <a href="/blog?post={{ post.slug }}"><img class="card-img-top"
+                                                      src="/media/{{ post.featured_image }}"
+                                                      alt="Card image cap"></a>
+            <div class="card-body">
+                <a style="text-decoration: none;" href="/blog?post={{ post.slug }}"><h4 class="card-text">
+                    {{ post.title }}</h4></a>
+                <a style="text-decoration: none;" href="/blog?post={{ post.slug }}">
+                    <div class="card-text flex-column" style="height: 100px;">
+                        {{ post.content|safe|truncatewords:10 }}
+                    </div>
+                </a>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <a href="/blog?post={{ post.slug }}">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Read</button>
+                        </a>
+                    </div>
+                    <small class="text-muted">Written by {{ post.author }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>

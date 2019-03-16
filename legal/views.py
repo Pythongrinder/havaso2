@@ -1,23 +1,21 @@
 from django.shortcuts import render
 from .models import Legal
+from havasoweb.session import check_set_session
 
-# Create your views here.
 
-# Create your views here.
 def legal(request):
-
+    print(check_set_session(request))
     content = request.GET
 
     try:
         legal_content = Legal.objects.get(url__iexact=content['legal'])
         single = True
     except:
-
         legal_content = Legal.objects.all()
         single = False
-    print(single)
+
     context = {
-        'single' : single,
+        'single': single,
         'legals': legal_content,
     }
 
