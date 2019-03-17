@@ -21,7 +21,7 @@ def album(request):
 def historic_album(request):
     check_set_session(request)
     context = {
-        'title': 'Jar Album',
+        'title': 'Historic Jar Album',
         'posts': Post.objects.all().order_by('-date_created')[:3],
         'jar': Jar.objects.filter(
             Q(jar_status='Historic Album') | Q(jar_status='Sold') | Q(jar_status='Damaged')).order_by('jar_number'),

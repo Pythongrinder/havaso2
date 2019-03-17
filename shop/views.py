@@ -121,15 +121,14 @@ def Selectjar(request):
         return JsonResponse({"models_to_return": list(queryset)})
 
     elif request.GET.get('jarnumber'):
+
         jar_number = request.GET.get('jarnumber')
 
         if jar_number:
             result = Jar.objects.filter(jar_number__iexact=jar_number, jar_status="Available")
-            print(result.count())
 
             if result.count() is 0:
                 result = Jar.objects.filter(jar_name__iexact=jar_number, jar_status="Available")
-                print(result.count())
 
             if result.count() > 0:
                 if str(list(result.values('jar_number'))[0]['jar_number']) not in request.session['session'][
@@ -237,7 +236,6 @@ def payment(request):
     else:
         price = "%.2f" % 42.50
 
-    print(buy_jar_data)
     context = {
 
         'jar': buy_jar_data,

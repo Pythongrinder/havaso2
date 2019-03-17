@@ -1,61 +1,11 @@
-.modal-overlay {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	background-color: black;
-	opacity: 0.6;
-	top: 0px;
-	left: 0px;
-	z-index: 10000;
-}
-
 @media only screen and (min-width: 768px) {
-	/*form styles*/
-	.modal-img {
-		position: absolute;
-		background-color: white;
-		left: 38%;
-		top: 30%;
-		height: 200px;
-		width: 200px;
-		z-index: 10001;
-	}
 	/* tablets and desktop */
-
     .shopProduct {
             margin-top: 5vh;
     }
-
 }
 
-@media only screen and (max-width: 767px) {
-	/* phones */
-	.modal-img {
-		position: absolute;
-		background-color: white;
-		left: 25%;
-		top: 20%;
-		height: 200px;
-		width: 200px;
-		z-index: 10001;
-	}
 
-}
-
-@media only screen and (max-width: 767px) and (orientation: portrait) {
-	/* portrait phones */
-	.modal-img {
-		position: absolute;
-		background-color: white;
-		left: 20%;
-		top: 20%;
-		height: 200px;
-		width: 200px;
-		z-index: 10001;
-	}
-
-
-}
 
 #msform {
 	text-align: center;

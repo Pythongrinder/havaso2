@@ -10,11 +10,8 @@ def blog(request):
         post = Post.objects.get(slug__iexact=content['post'])
         single = True
     except:
-        if False:
-            post = Post.objects.all().order_by('-date_created')[5:]
-        else:
             post = Post.objects.all().order_by('-date_created')[:5]
-        single = False
+            single = False
 
     context = {
         'single': single,

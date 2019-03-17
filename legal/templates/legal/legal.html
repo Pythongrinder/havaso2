@@ -4,38 +4,35 @@
 <div class="container py-4">
 
 
+    <div class="row">
+        <div class="col-md-12">
+
+            {% if single %}
 
 
-<div class="row">
-  <div class="col-md-12">
+            <div class="col-xs-12 py-4">
+                {{ legals.content|safe }}
 
-{% if single  %}
-
-
-          <div class="col-xs-12 py-4">
-        {{ legals.content|safe }}
-
-      </div>
-  </div>
-
-
-{% else %}
-
-{% for legal in legals %}
-            <div class="col-md-5">
-              <div class="card mb-4 shadow-sm blogpost">
-                <div class="card-body">
-                    <a style="text-decoration: none;" href="/legal?legal={{ legal.url }}"> <h4 class="card-text">{{ legal.title }}</h4></a>
-                </div>
-              </div>
             </div>
-           {% endfor %}
-</div>
- {% endif %}
+        </div>
+
+
+        {% else %}
+
+        {% for legal in legals %}
+        <div class="col-md-5">
+            <div class="card mb-4 shadow-sm blogpost">
+                <div class="card-body">
+                    <a style="text-decoration: none;" href="/legal?legal={{ legal.url }}"><h4 class="card-text">
+                        {{ legal.title }}</h4></a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 
 </div>
-
-
 
 
 {% endblock %}

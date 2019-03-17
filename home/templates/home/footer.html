@@ -1,0 +1,47 @@
+{% load static %}
+<footer class="blog-footer">
+    <div class="col-md-12 remove-all-margin-padding">
+        <img src="{% static 'home/assets/img/footer-p2&3-2048.png' %}" class="img-fluid w-100"/>
+
+        <div style="font-family: GraublauWeb;" class="container">
+            <div class="row">
+                <div class="col-md-6"><a href="/legal">Legal Terms</a> &nbsp; &nbsp;
+                    <a href="/contact">Contact Us</a></div>
+                <div class="col-md-6 text-right">All rights reserved Havaso ltd</div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</footer>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/holderjs@2.9.6/holder.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+
+{% with url_name=request.resolver_match.url_name %}
+
+{% if url_name == 'album' %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.6/js/lightslider.js"></script>
+<script src="{% static 'home/assets/js/album.js' %}"></script>
+{% endif %}
+
+{% if url_name == 'shop' %}
+<script src="{% static 'home/assets/js/shop.js' %}"></script>
+{% endif %}
+{% endwith %}
+
+<script src="{% static 'home/assets/js/newsletter.js' %}"></script>
+<script src="{% static 'home/assets/js/wishlist.js' %}"></script>

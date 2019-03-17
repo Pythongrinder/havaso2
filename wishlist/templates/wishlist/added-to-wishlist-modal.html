@@ -1,0 +1,48 @@
+<!-- Modal -->
+<div class="modal fade" id="wishlist" tabindex="-1" role="dialog" aria-labelledby="wishlist" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Added to your wishlist!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-8"><img src="/media/{{ jar.0.jar_image }}" height="425px"
+                                                           width="425px" alt="" class="mr-2 jar-img-album"></div>
+                                <div class="col-md-4 my-auto"><h3 class="jar-title">{{ jar.0.jar_title }}</h3>
+                                    <h5>Description</h5>
+                                    <p class="description">{{ jar.0.comment }}</p>
+                                    <input type="submit" value="Go to my Wishlist"
+                                           class="btn btn-large btn-outline-secondary btn-subscribe" data-toggle="modal"
+                                           data-target="#wishlist"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <form class="form-inline sendwishlistemail" enctype="multipart/form-data" method="post"
+                      action="/wishlist/emailwishlist/">
+                    {% csrf_token %}
+                    <div class="form-group m-2">
+                        <input type="text" readonly class="form-control-plaintext" value="Email my wishlist.">
+                    </div>
+                    <div class="form-group mx-sm-3 m-2">
+                        <input type="email" name="mail" required class="form-control" placeholder="Email">
+                    </div>
+                    <button type="submit" class="btn btn-primary m-2">Send</button>
+                    <button type="button" class="btn btn-secondary ml-1" data-dismiss="modal">Close</button>
+                </form>
+            </div>
+            <div class="alert alert-primary wishlist-alert" hidden role="alert">
+            </div>
+        </div>
+    </div>
+</div>
