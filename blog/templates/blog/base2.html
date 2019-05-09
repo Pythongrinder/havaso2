@@ -45,27 +45,28 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 <div class="row">
+
         <div class="collapse navbar-collapse" id="navbarsExample08">
             <ul class="navbar-nav align-items-start">
                 {% with url_name=request.resolver_match.url_name %}
+                  <!--
                 <li class="nav-item {% if url_name == 'havaso-home' %}active{% endif %}">
                     <a class="nav-link" href="/">Company<span class="sr-only"></span></a>
                 </li>
-                <li class="nav-item {% if url_name == 'album' %}active{% endif %}">
-                    <a class="nav-link" href="/album">CNG</a>
+                 -->
+
+                <li class="nav-item {% if url_name == 'cng' %}active{% endif %}">
+                    <a class="nav-link" href="/cng">CNG</a>
                 </li>
 
-                <li class="nav-item  {% if url_name == 'shop' %}active{% endif %}">
-                    <a class="nav-link" href="/shop">Blog</a>
+                <li class="nav-item  {% if url_name == 'havaso-blog' %}active{% endif %}">
+                    <a class="nav-link" href="/blog">Blog</a>
                 </li>
                 {% endwith %}
             </ul>
         </div>
     <div class="collapse navbar-collapse justify-content-end" id="navbarsExample08">
               <ul class="navbar-nav justify-content-end ">
-                <li class="nav-item">
-                    <a class="nav-link" href="/about">Support</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/contact">Contact Us</a>
                 </li>

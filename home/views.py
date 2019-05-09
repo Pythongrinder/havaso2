@@ -24,6 +24,14 @@ def about(request):
     }
     return render(request, 'home/page.html', context)
 
+def cng(request):
+    check_set_session(request)
+    context = {
+        'title': 'About',
+        'PageContent': WebContent.objects.get(position="CNGPageText")
+    }
+    return render(request, 'home/page.html', context)
+
 
 def page(request):
     check_set_session(request)

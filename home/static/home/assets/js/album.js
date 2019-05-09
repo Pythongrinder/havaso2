@@ -1,9 +1,9 @@
 $(document).ready(function() {
             var slider = $("#light-slider").lightSlider({
-            item: 8,
+            item: 5 ,
             autoWidth: false,
-            slideMove: 8, // slidemove will be 1 if loop is true
-            slideMargin: 10,
+            slideMove: 5, // slidemove will be 1 if loop is true
+            slideMargin: 5,
 
             addClass: '',
             mode: "slide",
@@ -24,13 +24,13 @@ $(document).ready(function() {
             nextHtml: '',
 
             rtl:false,
-            adaptiveHeight:false,
+            adaptiveHeight: true,
 
             vertical:false,
             verticalHeight:500,
-            vThumbWidth:100,
+            vThumbWidth:300,
 
-            thumbItem:10,
+            thumbItem:5,
             pager: true,
             gallery: false,
             galleryMargin: 5,
@@ -46,15 +46,15 @@ $(document).ready(function() {
             {
                 breakpoint:800,
                 settings: {
-                    item:6,
-                    slideMove:6,
+                    item:5,
+                    slideMove:5,
                   }
             },
             {
                 breakpoint:480,
                 settings: {
-                    item:5,
-                    slideMove:5,
+                    item:4,
+                    slideMove:4,
                   }
             }
         ],

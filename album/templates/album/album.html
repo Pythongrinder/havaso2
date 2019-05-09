@@ -6,13 +6,14 @@
         <div class="col-md-8">
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-8"><img src="/media/{{ jar.0.jar_image }}" alt="" class="mr-2 jar-img-album img-fluid"></div>
-                    <div class="col-md-4 my-auto"><h3 id="jar-title" class="jar-title">{{ jar.0.jar_name }}</h3>
+                    <div class="col-md-8"><img src="/media/{{ jar.0.jar_image }}" alt="" class="ml-2 jar-img-album img-fluid float-center"></div>
+                    <div class="col-md-4 my-auto"><h4 id="jar-title" class="jar-title"> Jar Name: {{ jar.0.jar_name }}</h4>
                         <h6 id="decorator">Decorator: {{ jar.0.decorator }}</h6>
                         <p class="description">{{ jar.0.comment }}</p>
 
                         {% with url_name=request.resolver_match.url_name %}
                         {% if url_name == 'album' %}
+                        <div class="buttons-bottom">
 
                         {% if jar.0.jar_status == 'Available' %}
                         <button id="jarnumber" value="{{ jar.0.jar_number }}"
@@ -33,18 +34,19 @@
                                class="btn btn-large btn-outline-secondary btn-subscribe" data-toggle="modal"
                                data-target="#wishlist_items"/>
                         {% endif %}
+                            </div>
                         {% endwith %}
                     </div>
                 </div>
             </div>
 
 
-            <div class="col-md-12 py-4">
+            <div class="col-md-12 py-2">
                 <ul id="light-slider">
                     {% for image in jar %}
                     <li class="getid">
                         <img src="/media/{{ image.jar_image }}" id="{{ image.jar_name }}" alt="{{ image.comment }}"
-                             class="rounded img-fluid">
+                             class="rounded img-fluid small-jar-img">
                         <input hidden value="{{ image.jar_number }}">
                         <input class="decorator" hidden value="{{ image.decorator }}">
                         <input class="status" hidden value="{{ image.jar_status }}">

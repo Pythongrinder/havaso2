@@ -1,3 +1,17 @@
+.jar-img-album {
+
+max-height: 400px;
+
+}
+
+.small-jar-img {
+
+max-height: 300px ;
+
+}
+
+
+
 .modal-overlay {
 	position: absolute;
 	width: 100%;
@@ -25,6 +39,12 @@
     .shopProduct {
             margin-top: 5vh;
     }
+
+    .buttons-bottom {
+
+margin-top: 125px;
+
+}
 
 }
 
