@@ -105,7 +105,7 @@ $(".next").click(function() {
         next_fs.show();
         $('#shoppage2').prepend('<div class="boxtitle"><h2 class="fs-title">Step 2 - Guided Jar</h2>' +
             '<p>You have chosen a Guided Jar.</p> <p> Price: € 75,00</p> ' +
-            '<p>After payment you will be directed to an appointment picker. Make an appointment to finish your order.</p>' +
+            '<p>After payment you will receive an email in regards to your appointment.</p>' +
             '<textarea class="describe" rows="4" cols="50"> </textarea>' +
             '<small class="text-muted">Please provide us with your ideas, thoughts or doubts to have a starting point for our call. May be keywords</small></div>')
 

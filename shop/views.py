@@ -286,7 +286,7 @@ def paypal(request):
     VERIFY_URL_PROD = 'https://ipnpb.paypal.com/cgi-bin/webscr'
     VERIFY_URL_TEST = 'https://ipnpb.sandbox.paypal.com/cgi-bin/webscr'
     # Switch as appropriate
-    VERIFY_URL = VERIFY_URL_TEST
+    VERIFY_URL = VERIFY_URL_PROD
     # CGI preamble
     print(request.POST.dict())
     answer = request.POST.dict()
