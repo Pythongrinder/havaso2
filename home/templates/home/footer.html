@@ -33,10 +33,10 @@
 
 {% with url_name=request.resolver_match.url_name %}
 
-{% if url_name == 'album' %}
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightslider/1.1.6/js/lightslider.js"></script>
 <script src="{% static 'home/assets/js/album.js' %}"></script>
-{% endif %}
+
 
 {% if url_name == 'shop' %}
 <script src="{% static 'home/assets/js/shop.js' %}"></script>
