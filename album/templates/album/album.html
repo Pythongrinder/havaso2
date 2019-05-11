@@ -12,8 +12,9 @@
                         <p class="description">{{ jar.0.comment }}</p>
 
                         {% with url_name=request.resolver_match.url_name %}
-                        {% if url_name == 'album' %}
                         <div class="buttons-bottom">
+                        {% if url_name == 'album' %}
+
 
                         {% if jar.0.jar_status == 'Available' %}
                         <button id="jarnumber" value="{{ jar.0.jar_number }}"
