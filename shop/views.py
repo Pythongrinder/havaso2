@@ -15,10 +15,10 @@ from django.contrib.sites.shortcuts import get_current_site
 import string
 import random
 
-# API_HOST = "https://bitpay.com" #for production, live bitcoin
-API_HOST = "https://test.bitpay.com"  # for testing, testnet bitcoin
-KEY_FILE = "key.priv"
-TOKEN_FILE = "token.priv"
+API_HOST = "https://bitpay.com" #for production, live bitcoin
+# API_HOST = "https://test.bitpay.com"  # for testing, testnet bitcoin
+KEY_FILE = "realkey.priv"
+TOKEN_FILE = "realtoken.priv"
 
 # check if there is a preexisting key file
 if os.path.isfile(KEY_FILE):
