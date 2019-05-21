@@ -5,8 +5,10 @@
     <div class="row">
         <div class="col-md-8">
             <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-8"><img src="/media/{{ jar.0.jar_image }}" alt="" class="ml-2 jar-img-album img-fluid float-center"></div>
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-md-6 .offset-md-2">
+                        <div style="height:400px; display: flex; justify-content: center; align-items: center;"><img src="/media/{{ jar.0.jar_image }}" alt="" class="ml-2 jar-img-album img-fluid justify-content-center align-items-center"></div>
+                    </div>
                     <div class="col-md-4 my-auto"><h4 id="jar-title" class="jar-title"> Jar Name: {{ jar.0.jar_name }}</h4>
                         <h6 id="decorator">Decorator: {{ jar.0.decorator }}</h6>
                         <p class="description">{{ jar.0.comment }}</p>

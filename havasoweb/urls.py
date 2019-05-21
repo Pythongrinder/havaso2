@@ -32,6 +32,7 @@ urlpatterns = [
     path(r'blog/', include('blog.urls')),
     path(r'newsletter/', include('newsletter.urls')),
     path(r'photologue/', include('photologue.urls', namespace='photologue')),
+    path(r'maintenance-mode/', include('maintenance_mode.urls')),
 
 
 ]

@@ -3,7 +3,7 @@ $(document).ready(function() {
             item: 5 ,
             autoWidth: false,
             slideMove: 5, // slidemove will be 1 if loop is true
-            slideMargin: 5,
+            slideMargin: 0,
 
             addClass: '',
             mode: "slide",

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'photologue',
      'sortedm2m',
+    'maintenance_mode',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +58,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.contrib.sites.middleware.CurrentSiteMiddleware'
+    'django.contrib.sites.middleware.CurrentSiteMiddleware',
+    'maintenance_mode.middleware.MaintenanceModeMiddleware'
 ]
 
 ROOT_URLCONF = 'havasoweb.urls'
@@ -73,6 +75,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'maintenance_mode.context_processors.maintenance_mode',
             ],
         },
     },
