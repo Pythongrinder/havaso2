@@ -10,6 +10,18 @@
     <form enctype="multipart/form-data" method="post" action=".">
         {% csrf_token %}
         {{ form.as_p }}
-        <p><input id="id_submit" name="submit" value="{% trans "Activate" %}" type="submit" /></p>
+        <p><input  id="id_submit" name="submit" value="{% trans "Activate" %}" type="submit" /></p>
     </form>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+
+$(function() {
+    $('#id_submit').click();
+});
+
+</script>
+
+
 {% endblock body %}

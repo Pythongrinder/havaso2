@@ -5,7 +5,10 @@ from datetime import datetime, timezone
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-from havasoweb.settings import website
+from django.contrib.sites.models import Site
+import logging
+
+website = Site.objects.get_current()
 
 
 class Command(BaseCommand):
@@ -21,7 +24,7 @@ class Command(BaseCommand):
                 email = i.email
                 subject, from_email = 'Reminder: Your Medicine Jar Wish List will expire in 7 days',\
                                       'support@havaso.com',
-                link = website + '/wishlist/?wishlist=' + str(i.url_ref)
+                link = str(website) + '/wishlist/?wishlist=' + str(i.url_ref)
                 html_content = render_to_string('wishlist/reminder_email.html', {'link': link})
                 # render with dynamic value
                 text_content = strip_tags(html_content)

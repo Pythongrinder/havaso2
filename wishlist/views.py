@@ -14,7 +14,10 @@ from home.views import check_set_session
 from django.contrib.sites.shortcuts import get_current_site
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime, timezone
+from django.contrib.sites.models import Site
+from django.core import mail
 
+website = Site.objects.get_current()
 
 @csrf_exempt
 def add(request):
@@ -87,14 +90,13 @@ def sendwishlistemail(request):
         a.wishlistedjars.set(jars_objects)
 
         subject, from_email = 'Your Medicine Jar Wish List', 'support@havaso.com',
-        link = str(get_current_site(request)) + '/wishlist/?wishlist=' + str(a.url_ref)
+        link = str(website) + '/wishlist/?wishlist=' + str(a.url_ref)
         html_content = render_to_string('wishlist/mail.html', {'link': link})  # render with dynamic value
-        text_content = strip_tags(html_content)  # Strip the html tag. So people can see the pure text at least.
-
+        plain_message = strip_tags(html_content)
         # create the email, and attach the HTML version as well.
-        msg = EmailMultiAlternatives(subject, text_content, from_email, [email])
-        msg.attach_alternative(html_content, "text/html")
-        msg.send()
+        mail.send_mail(subject, plain_message, from_email, [email], html_message=html_content)
+
+
         return HttpResponse("Done!")
     else:
         return HttpResponse("Empty")

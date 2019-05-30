@@ -3,3 +3,4 @@
 /__pycache__/
 migrations
 havasoweb/settings.py
+myapp.log

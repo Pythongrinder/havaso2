@@ -10,6 +10,9 @@
     <form enctype="multipart/form-data" method="post" action=".">
         {% csrf_token %}
         {{ form.as_p }}
-        <p><input id="id_submit" name="submit" value="{% trans "Activate" %}" type="submit" /></p>
+        <p><input onload="document.getElementById('id_submit').click();" id="id_submit" name="submit" value="{% trans "Activate" %}" type="submit" /></p>
     </form>
+
+<h1>HELLO</h1>
+
 {% endblock body %}

@@ -1,3 +1,5 @@
+import logging
+
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
@@ -11,7 +13,7 @@ def check_set_session(request):
     current_session_state = request.session.get('session')
     if current_session_state is None:
         ip = get_client_ip(request)
-        print("New Session Started!")
+        logging.info("New Session Started!")
         request.session['session'] = {
             'ip': ip,
             'products': [],
@@ -23,4 +25,5 @@ def check_set_session(request):
         current_session_state = request.session.get('session')
         return current_session_state
     else:
+        logging.info(current_session_state)
         return current_session_state

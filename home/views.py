@@ -4,13 +4,14 @@ from home.models import WebContent
 from django.contrib import messages
 from .forms import ContactForm
 from havasoweb.session import check_set_session
-
+import logging
 
 def index(request):
     check_set_session(request)
     context = {
         'title': 'Homepage',
         'description': WebContent.objects.get(position="HomePageDescriptionText"),
+        'images': WebContent.objects.get(position="HomePageDescriptionImages"),
         'posts': Post.objects.filter(categories__position='Jars').order_by('-date_created')[:3],
     }
     return render(request, 'home/index.html', context)

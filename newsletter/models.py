@@ -333,7 +333,7 @@ class Subscription(models.Model):
 
         variable_dict = {
             'subscription': self,
-            'site': Site.objects.first(),
+            'site': Site.objects.get_current(),
             'newsletter': self.newsletter,
             'date': self.subscribe_date,
             'STATIC_URL': settings.STATIC_URL,
@@ -538,7 +538,7 @@ class Submission(models.Model):
     def extra_headers(self):
         return {
             'List-Unsubscribe': 'http://%s%s' % (
-                Site.objects.first().domain,
+                Site.objects.get_current(),
                 reverse('newsletter_unsubscribe_request',
                         args=[self.message.newsletter.slug])
             ),
@@ -575,7 +575,7 @@ class Submission(models.Model):
     def send_message(self, subscription):
         variable_dict = {
             'subscription': subscription,
-            'site': Site.objects.first(),
+            'site': Site.objects.get_current(),
             'submission': self,
             'message': self.message,
             'newsletter': self.newsletter,

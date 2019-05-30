@@ -1,7 +1,7 @@
 from django import forms
 from django.forms.utils import ValidationError
 from django.utils.translation import ugettext_lazy as _
-
+import logging
 from .models import Subscription
 from .validators import validate_email_nouser
 
@@ -46,21 +46,23 @@ class SubscribeRequestForm(NewsletterForm):
 
     def clean_email_field(self):
         data = self.cleaned_data['email_field']
-        print(data)
         # Check whether we have already been subscribed to
         try:
             subscription = Subscription.objects.get(
                 email_field__exact=data,
                 newsletter=self.instance.newsletter
             )
-            print(subscription)
+
+            logging.info(subscription)
 
             if subscription.subscribed and not subscription.unsubscribed:
+                logging.info("Email was already subscribed")
                 raise ValidationError(
                     _("Your e-mail address has already been subscribed to.")
                 )
             else:
                 self.instance = subscription
+                logging.info("Email subscribed!")
 
             self.instance = subscription
 
