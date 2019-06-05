@@ -12,7 +12,7 @@ def album(request):
     context = {
         'title': 'Jar Album',
         'posts': Post.objects.all().order_by('-date_created')[:3],
-        'jar': Jar.objects.filter(Q(jar_status='Available') | Q(jar_status='Sold')).order_by('jar_number'),
+        'jar': Jar.objects.filter(Q(jar_status='Available') | Q(jar_status='Sold')).order_by('-jar_number'),
     }
 
     return render(request, 'album/album.html', context)
@@ -24,7 +24,7 @@ def historic_album(request):
         'title': 'Historic Jar Album',
         'posts': Post.objects.all().order_by('-date_created')[:3],
         'jar': Jar.objects.filter(
-            Q(jar_status='Historic Album') | Q(jar_status='Sold') | Q(jar_status='Damaged')).order_by('jar_number'),
+            Q(jar_status='Historic Album') | Q(jar_status='Sold') | Q(jar_status='Damaged')).order_by('-jar_number'),
     }
 
     return render(request, 'album/album.html', context)

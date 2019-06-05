@@ -28,7 +28,7 @@ $(document).ready(function() {
 
             vertical:false,
             verticalHeight:500,
-            vThumbWidth:300,
+            vThumbWidth:500,
 
             thumbItem:5,
             pager: true,

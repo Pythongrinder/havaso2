@@ -9,6 +9,27 @@ body {
 	margin-bottom: 150px;
 }
 
+input:focus {
+    outline: none !important;
+    border-color: #93989e !important;
+    box-shadow: 0 0 10px #93989e !important;
+}
+textarea:focus {
+    outline: none !important;
+    border-color: #93989e !important;
+    box-shadow: 0 0 10px #93989e !important;
+}
+
+select:focus {
+    outline: none !important;
+    border-color: #93989e !important;
+    box-shadow: 0 0 10px #93989e !important;
+}
+
+.lSSlideOuter .lSPager.lSpg > li:hover a, .lSSlideOuter .lSPager.lSpg > li.active a {
+    background-color: #990033 !important;
+}
+
 h1,
 h2,
 h3,
@@ -21,20 +42,20 @@ p {
 }
 
 a {
-	color: #343434;
+	color: #343434 !important;
 	font-weight: bold;
 	text-decoration: none;
 }
 
-a:visited {
-	color: #438093;
+a:visited, nav-link {
+	color: #438093 !important;
 	font-weight: bold;
 	text-decoration: none;
 }
 
-a:hover {
-	color: #990033;
-	text-decoration: underline;
+a:hover, nav-link {
+	color: #990033 !important;
+	text-decoration: underline !important;
 }
 
 a:focus {
@@ -115,6 +136,7 @@ footer {
 	padding-top: .65rem;
 	padding-bottom: .75rem;
 	font-size: .975rem;
+	color: #343434 !important;
 }
 
 /*
