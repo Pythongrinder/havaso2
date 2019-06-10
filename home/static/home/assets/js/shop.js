@@ -16,7 +16,23 @@ $(document).on("click", "#tocheckout", function() {
 
     }
 
+    if($("textarea").hasClass("requaredtextarea")) {
 
+        if ($("textarea:eq(1)").val()) {
+           $.ajax({
+        type: "GET",
+        url: url,
+        data: data,
+        success: function(data) {
+
+            window.location.href = '/shop/payment/'
+        }
+    });
+
+     }
+
+
+    } else {
 
     $.ajax({
         type: "GET",
@@ -29,6 +45,8 @@ $(document).on("click", "#tocheckout", function() {
         }
     });
 
+    }
+
 });
 
 
@@ -37,6 +55,14 @@ var current_fs, next_fs, previous_fs; //fieldsets
 var left, opacity, scale; //fieldset properties which we will animate
 var animating; //flag to prevent quick multi-click glitches
 $(".next").click(function() {
+
+    if($("textarea").hasClass("requaredtextarea")) {
+    if ($(".requaredtextarea").val().length === 1) {
+       $(".alert-danger").hide();
+       $('#shoppage2').prepend('<div class="alert alert-danger" role="alert">Please describe the purpose for your jar.!</div>');
+        return;}
+    }
+
     var current_fs = $(this).parent();
     var next_fs = $(this).parent().next();
     var purpose = $('#purpose option:selected').val();
@@ -50,7 +76,7 @@ $(".next").click(function() {
         $("#shopselector").hide();
         $('#shoppage2').prepend('<div class="boxtitle"><h2 class="fs-title">Step 2 - Personal Jar</h2>' +
             '<p>You have chosen a Personal Jar.</p> <p> Price: € 42,50</p> <p>Describe the purpose for your jar.</p>' +
-            '<textarea id="textInput" rows="4" cols="50"> </textarea>' +
+            '<textarea class="requaredtextarea" id="textInput" rows="4" cols="50" required> </textarea>' +
             '<small class="text-muted">Please give a short description of your goal or objective. May be keywords.</small></div>')
 
         var url = '/shop/getcheckout/';
@@ -95,10 +121,8 @@ $(".next").click(function() {
                 }
             }
         });
-        next_fs.show();
+      // CHECK THIS IS NECESSERY  next_fs.show();
 
-
-        /// NOT WORKING YET
     } else {
         animating = true;
         $("#shopselector").hide();
@@ -106,7 +130,7 @@ $(".next").click(function() {
         $('#shoppage2').prepend('<div class="boxtitle"><h2 class="fs-title">Step 2 - Guided Jar</h2>' +
             '<p>You have chosen a Guided Jar.</p> <p> Price: € 75,00</p> ' +
             '<p>After payment you will receive an email in regards to your appointment.</p>' +
-            '<textarea class="describe" rows="4" cols="50"> </textarea>' +
+            '<textarea class="describe requaredtextarea" rows="4" cols="50"> </textarea>' +
             '<small class="text-muted">Please provide us with your ideas, thoughts or doubts to have a starting point for our call. May be keywords</small></div>')
 
         var url = '/shop/getcheckout/';

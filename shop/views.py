@@ -14,6 +14,7 @@ import os.path
 from django.contrib.sites.shortcuts import get_current_site
 import string
 import random
+import logging
 
 API_HOST = "https://bitpay.com" #for production, live bitcoin
 # API_HOST = "https://test.bitpay.com"  # for testing, testnet bitcoin
@@ -191,9 +192,11 @@ def tocheckout(request):
                                  address2=address2,
                                  country=country, state=state, zip=zip, paymentMethod=paymentmethod,
                                  order_details=jar + " " + purpose + " " + keywords)
+
+    logging.info(checkout)
+
     checkout.save()
     order_id = checkout.pk
-
     if paymentmethod == 'paypal':
         def id_generator(size=21, chars=string.ascii_uppercase + string.digits):
             return ''.join(random.choice(chars) for _ in range(size))
@@ -203,7 +206,7 @@ def tocheckout(request):
         checkout.save()
         request.session.get('session')['invoice'] = invoice
         request.session.modified = True
-
+        logging.info("Paypal Invoice number " + invoice)
         return JsonResponse("Paypal " + invoice, safe=False)
 
     if paymentmethod == 'bitcoin':
@@ -217,6 +220,7 @@ def tocheckout(request):
         checkout.save()
         request.session.get('session')['invoice'] = invoice['id']
         request.session.modified = True
+        logging.info("BITPAY Invoice number " + invoice)
         return JsonResponse(invoice['url'], safe=False)
     return JsonResponse("none", safe=False)
 

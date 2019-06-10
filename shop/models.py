@@ -26,7 +26,7 @@ class CheckOut(models.Model):
     address1 = models.CharField(max_length=500)
     address2 = models.CharField(max_length=500, blank=True, null=True)
     country = models.CharField(max_length=50)
-    state = models.CharField(max_length=50)
+    state = models.CharField(max_length=50, blank=True, null=True)
     zip = models.CharField(max_length=500)
     quantity = models.IntegerField(blank=True, null=True)
     price = models.DecimalField(decimal_places=2, max_digits=5, blank=True, null=True)
