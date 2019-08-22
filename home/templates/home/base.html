@@ -68,20 +68,23 @@
                  -->
 
                 <li class="nav-item">
-                    <a class="nav-link {% if url_name == 'cng' %}active{% endif %}" href="/cng">CNG<span class="sr-only"></span></a>
+                    <a class="nav-link {% if url_name == 'cng' %}active{% endif %}" href="/cng/">CNG<span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item {% if url_name == 'havaso-home' %}active{% endif %}">
                     <a class="nav-link" href="/">Jars<span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item {% if url_name == 'album' %}active{% endif %}">
-                    <a class="nav-link" href="/album">Jar-Album</a>
+                    <a class="nav-link" href="/album/">Jar-Album</a>
                 </li>
 
                 <li class="nav-item  {% if url_name == 'shop' %}active{% endif %}">
-                    <a class="nav-link" href="/shop">Jar-Shop</a>
+                    <a class="nav-link" href="/shop/">Jar-Shop</a>
                 </li>
-                <li class="nav-item  {% if url_name == 'about' %}active{% endif %}">
-                    <a class="nav-link" href="/about">About Us</a>
+                <li class="nav-item  {% if url_name == 'blog' %}active{% endif %}">
+                    <a class="nav-link" href="/blog/">Blog</a>
+                </li>
+                <li class="nav-item  {% if url_name == 'services' %}active{% endif %}">
+                    <a class="nav-link" href="/services/">Services</a>
                 </li>
                 {% endwith %}
             </ul>
@@ -89,7 +92,10 @@
             <div class="collapse navbar-collapse justify-content-end " id="navbarsExample08">
               <ul class="navbar-nav justify-content-end ">
                 <li class="nav-item">
-                    <a class="nav-link" href="/contact">Contact Us</a>
+                    <a class="nav-link" href="/contact/">Contact Us</a>
+                </li>
+                <li class="nav-item  {% if url_name == 'about' %}active{% endif %}">
+                    <a class="nav-link" href="/about/">About Us</a>
                 </li>
             </ul>
     </div>
