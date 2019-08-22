@@ -118,7 +118,7 @@ footer {
 	.navbarlocation {
 		position: absolute;
 		left: 4.5%;
-		right: 25%;
+		right: 15%;
 		top: 50px;
 		display: block;
 		z-index: 100000;
