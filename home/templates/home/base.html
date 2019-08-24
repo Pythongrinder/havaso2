@@ -36,10 +36,19 @@
     font-family: GraublauWeb;
     src: url("{% static 'home/assets/font/TektonPro-Regular.otf' %}") format("opentype");
 }
-
-
-
-
+.contact {
+	padding: 60px 40px 40px 60px;
+}
+@media (min-width: 992px) {
+    .navbarlocation {
+		position: absolute;
+		left: 4.5%;
+		right: 15%;
+		top: 50px;
+		display: block;
+		z-index: 100000;
+	}
+}
     </style>
 
 </head>
@@ -68,7 +77,7 @@
                  -->
 
                 <li class="nav-item">
-                    <a class="nav-link {% if url_name == 'cng' %}active{% endif %}" href="/cng/">CNG<span class="sr-only"></span></a>
+                    <a class="nav-link {% if url_name == 'havaso-home' %}active{% endif %}" href="/">CNG<span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item {% if url_name == 'havaso-home' %}active{% endif %}">
                     <a class="nav-link" href="/">Jars<span class="sr-only"></span></a>

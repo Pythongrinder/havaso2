@@ -4,6 +4,7 @@ from home.models import WebContent
 from django.contrib import messages
 from .forms import ContactForm
 from havasoweb.session import check_set_session
+from django.http import HttpResponse 
 import logging
 
 def index(request):
@@ -24,13 +25,15 @@ def about(request):
     }
     return render(request, 'home/page.html', context)
 
-def cng(request):
+def services(request):
     check_set_session(request)
     context = {
-        'title': 'About',
-        'PageContent': WebContent.objects.get(position="CNGPageText")
+        'title': 'Services',
+        'PageContent': WebContent.objects.get(position="Services")
     }
     return render(request, 'home/page.html', context)
+
+
 
 
 def page(request):
@@ -47,6 +50,7 @@ def contact(request):
     form = ContactForm()
     context = {
         'title': 'Contact Us',
+        'PageContent': WebContent.objects.get(position="Contact"),
         'form': form
     }
 
@@ -61,5 +65,26 @@ def contact(request):
             form = ContactForm()
     else:
         form = ContactForm()
-
     return render(request, 'home/contact.html', context)
+
+def contact2(request):
+    check_set_session(request)
+    form = ContactForm()
+    context = {
+        'title': 'Contact Us',
+        'PageContent': WebContent.objects.get(position="Contact"),
+        'PageContent2': WebContent.objects.get(position="Contactdetails"),
+        'form': form
+    }
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            form = ContactForm()
+            messages.success(request, 'Thank you!')
+        else:
+            messages.error(request, 'Email not valid or already exists!')
+            form = ContactForm()
+    else:
+        form = ContactForm()
+    return render(request, 'home/contact2.html', context)

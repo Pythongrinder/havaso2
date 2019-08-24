@@ -1,10 +1,9 @@
 {% extends "home/base.html" %}
-
 {% block content %}
 <div class='container' fluid-width >
 <div class="row">
     <div class="col-6">
-    <form id="contact-form" method="post" action="/contact/" role="form">
+    <form id="contact-form" method="post" action="/contact2/" role="form">
         <div class="messages"></div>
             <h3>Contact us</h3>
                     <div class="form-group">
@@ -23,15 +22,17 @@
                         <strong>*</strong> These fields are required.
     </form>
 </div>
-
 <div class="col-6">
                 <div class="contact">
                     {{ PageContent.text }}
-
                 </div>
-            </div><!-- /.main -->
+            </div>
 </div>
-</div>
+<div class="row">
+<div class="col-12">
+        {{ PageContent2.text }}
+    </div>
+</div></div>
 </div>
 
 {% endblock %}
